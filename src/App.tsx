@@ -3,6 +3,7 @@ import { UserRoundPlus } from 'lucide-react';
 import './App.css'
 import Player from './components/Player'
 import { generateId } from './utils/generateId';
+import { generateRandomName } from './utils/generateName';
 
 type Player = {
   name: string;
@@ -13,17 +14,19 @@ type Player = {
 type PlayersState = Player[];
 
 function App() {
-  const idPlayer1: string = generateId()
-  const idPlayer2: string = generateId()
+  const idPlayer1: string = generateId();
+  const idPlayer2: string = generateId();
+  const namePlayer1: string = generateRandomName();
+  const namePlayer2: string = generateRandomName();
   const [players, setPlayers] = useState<PlayersState>([
-    { id: idPlayer1, name: 'Player 1', score: 0 },
-    { id: idPlayer2, name: 'Player 2', score: 0 },
+    { id: idPlayer1, name: namePlayer1, score: 0 },
+    { id: idPlayer2, name: namePlayer2, score: 0 },
   ]);
 
   const addPlayer = () => {
-    const newPlayer: Player = {id: generateId(), name: `Player ${players.length + 1}`, score: 0 };
+    const newPlayer: Player = {id: generateId(), name: generateRandomName(), score: 0 };
     setPlayers([...players, newPlayer]);
-    console.log('Player is added');
+    console.log(`Player ${newPlayer.name} is added`);
   }
 
   const deletePlayer = (id: string) => {
