@@ -15,3 +15,4 @@ export const funnyNames = [
     "Chance Chaser",
     "Auction Ace",
   ];
+  

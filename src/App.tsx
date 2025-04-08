@@ -4,6 +4,7 @@ import './App.css'
 import Player from './components/Player'
 import { generateId } from './utils/generateId';
 import { generateRandomName } from './utils/generateName';
+import PropertyTable from './components/Tables/PropertyTable';
 
 type Player = {
   name: string;
@@ -68,6 +69,9 @@ function App() {
         <div className='flex justify-center items-center'>
           <button className='h-10 p-2 bg-blue-500 rounded-lg bg-[#eeeded] shadow-[4px_4px_8px_#777777,-4px_-4px_8px_#ffffff]' onClick={addPlayer}><UserRoundPlus color='white'/></button>
         </div>
+      </div>
+      <div>
+        <PropertyTable />
       </div>
     </>
   )
