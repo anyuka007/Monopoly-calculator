@@ -52,7 +52,12 @@ function App() {
     console.log(`Player is edited`);
   };
 
-  const modeButtonStyle ='w-[120px] border p-2 rounded-lg text-center'
+  const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
+    `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 ${
+      mode === buttonMode
+        ? "bg-blue-500 text-white shadow-md"
+        : "bg-gray-200 text-black hover:bg-gray-300"
+    }`;
 
   const modeHandler = (selectedMode: 'classic' | 'wunderland') => {
     setMode(selectedMode);
@@ -79,8 +84,8 @@ function App() {
       </div>
       
       <div className="flex gap-2 justify-end items-center m-5">
-          <div className={modeButtonStyle} onClick={()=> modeHandler("classic")}>Classic</div>
-          <div className={modeButtonStyle} onClick={()=> modeHandler("wunderland")}>Wunderland</div>
+          <div className={modeButtonStyle("classic")} onClick={()=> modeHandler("classic")}>Classic</div>
+          <div className={modeButtonStyle("wunderland")} onClick={()=> modeHandler("wunderland")}>Wunderland</div>
         </div>
       <div>
         <PropertyTable mode={mode}/>

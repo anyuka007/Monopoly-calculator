@@ -15,7 +15,7 @@ type PropertyCard = {
 type Mode = "classic" | "wunderland";
 
 // Define the type for the PropertyTable props
-interface PropertyTableProps {
+type PropertyTableProps = {
     mode: Mode;
 }
 
