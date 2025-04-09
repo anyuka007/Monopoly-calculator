@@ -17,7 +17,7 @@ const PropertyTable = () => {
                 </thead>
                 <tbody>
                 {propertyCards.map((card, index) => (
-                        <PropertyTableRow key={index} name={card.name} color={card.color}  />
+                        <PropertyTableRow key={index} name={card.name.wunderland} color={card.color}  />
                     ))}
                 </tbody>
             </table>

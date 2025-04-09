@@ -1,5 +1,5 @@
 export type PropertyCard = {
-    name: string;
+    name: { classic: string; wunderland: string };
     color: string;
     price: number;
     rent: number[];
@@ -23,7 +23,7 @@ export type PropertyCard = {
   
   export const propertyCards: PropertyCard[] = [
     {
-      name: "Mediterranean Avenue",
+      name: {classic: "Mediterranean Avenue", wunderland: "Wüste Death Valley Amerika"},
       color: "brown",
       price: 60,
       rent: [2, 10, 30, 90, 160, 250],
@@ -31,7 +31,7 @@ export type PropertyCard = {
       mortgageValue: 30,
     },
     {
-      name: "Baltic Avenue",
+      name: {classic: "Baltic Avenue", wunderland: "Eismeer Finland" },
       color: "brown",
       price: 60,
       rent: [4, 20, 60, 180, 320, 450],
@@ -39,7 +39,7 @@ export type PropertyCard = {
       mortgageValue: 30,
     },
     {
-      name: "Oriental Avenue",
+      name: {classic: "Oriental Avenue", wunderland: "Bahnbetriebswerk Hamburg"},
       color: "sky",
       price: 100,
       rent: [6, 30, 90, 270, 400, 550],
@@ -47,7 +47,7 @@ export type PropertyCard = {
       mortgageValue: 50,
     },
     {
-      name: "Vermont Avenue",
+      name: {classic: "Vermont Avenue", wunderland: "Knuffingen Airport"},
       color: "sky",
       price: 100,
       rent: [6, 30, 90, 270, 400, 550],
@@ -55,7 +55,7 @@ export type PropertyCard = {
       mortgageValue: 50,
     },
     {
-      name: "Connecticut Avenue",
+    name: {classic: "Connecticut Avenue", wunderland: "Schokoladenfabrik Schweiz"},
       color: "sky",
       price: 120,
       rent: [8, 40, 100, 300, 450, 600],
@@ -63,7 +63,7 @@ export type PropertyCard = {
       mortgageValue: 60,
     },
     {
-      name: "St. Charles Place",
+      name: {classic: "St. Charles Place", wunderland: "Hermannsdenkmal Mitteldeutschland"},
       color: "pink",
       price: 140,
       rent: [10, 50, 150, 450, 625, 750],
@@ -71,7 +71,7 @@ export type PropertyCard = {
       mortgageValue: 70,
     },
     {
-      name: "States Avenue",
+      name: {classic: "States Avenue", wunderland: "Mount Rushmore Amerika"},
       color: "pink",
       price: 140,
       rent: [10, 50, 150, 450, 625, 750],
@@ -79,7 +79,7 @@ export type PropertyCard = {
       mortgageValue: 70,
     },
     {
-      name: "Virginia Avenue",
+      name: {classic: "Virginia Avenue", wunderland: "Kolosseum Italien"},
       color: "pink",
       price: 160,
       rent: [12, 60, 180, 500, 700, 900],
@@ -87,7 +87,7 @@ export type PropertyCard = {
       mortgageValue: 80,
     },
     {
-      name: "St. James Place",
+      name: {classic: "St. James Place", wunderland: "Kirmes Mitteldeutschland"},
       color: "orange",
       price: 180,
       rent: [14, 70, 200, 550, 750, 950],
@@ -95,7 +95,7 @@ export type PropertyCard = {
       mortgageValue: 90,
     },
     {
-      name: "Tennessee Avenue",
+      name: {classic: "Tennessee Avenue", wunderland: "Zirkus Dänemark"},
       color: "orange",
       price: 180,
       rent: [14, 70, 200, 550, 750, 950],
@@ -103,7 +103,7 @@ export type PropertyCard = {
       mortgageValue: 90,
     },
     {
-      name: "New York Avenue",
+      name: {classic: "New York Avenue", wunderland: "DJ Bobo Konzert Schweiz"},
       color: "orange",
       price: 200,
       rent: [16, 80, 220, 600, 800, 1000],
@@ -111,7 +111,7 @@ export type PropertyCard = {
       mortgageValue: 100,
     },
     {
-      name: "Kentucky Avenue",
+      name: {classic: "Kentucky Avenue", wunderland: "Grand Canyon Amerika"},
       color: "red",
       price: 220,
       rent: [18, 90, 250, 700, 875, 1050],
@@ -119,7 +119,7 @@ export type PropertyCard = {
       mortgageValue: 110,
     },
     {
-      name: "Indiana Avenue",
+      name: {classic: "Indiana Avenue", wunderland: "Matterhorn Schweiz"},
       color: "red",
       price: 220,
       rent: [18, 90, 250, 700, 875, 1050],
@@ -127,7 +127,7 @@ export type PropertyCard = {
       mortgageValue: 110,
     },
     {
-      name: "Illinois Avenue",
+      name: {classic: "Illinois Avenue", wunderland: "Vesuv Italien"},
       color: "red",
       price: 240,
       rent: [20, 100, 300, 750, 925, 1100],
@@ -135,7 +135,7 @@ export type PropertyCard = {
       mortgageValue: 120,
     },
     {
-      name: "Atlantic Avenue",
+      name: {classic: "Atlantic Avenue", wunderland: "Michel Hamburg"},
       color: "yellow",
       price: 260,
       rent: [22, 110, 330, 800, 975, 1150],
@@ -143,7 +143,7 @@ export type PropertyCard = {
       mortgageValue: 130,
     },
     {
-      name: "Ventnor Avenue",
+      name: {classic: "Ventnor Avenue", wunderland: "Schloss Löwenstein Knuffingen"},
       color: "yellow",
       price: 260,
       rent: [22, 110, 330, 800, 975, 1150],
@@ -151,7 +151,7 @@ export type PropertyCard = {
       mortgageValue: 130,
     },
     {
-      name: "Marvin Gardens",
+      name: {classic: "Marvin Gardens", wunderland: "Petersdom Italien"},
       color: "yellow",
       price: 280,
       rent: [24, 120, 360, 850, 1025, 1200],
@@ -159,7 +159,7 @@ export type PropertyCard = {
       mortgageValue: 140,
     },
     {
-      name: "Pacific Avenue",
+      name: {classic: "Pacific Avenue", wunderland: "St. Max Schweiz"},
       color: "green",
       price: 300,
       rent: [26, 130, 390, 900, 1100, 1275],
@@ -167,7 +167,7 @@ export type PropertyCard = {
       mortgageValue: 150,
     },
     {
-      name: "North Carolina Avenue",
+      name: {classic: "North Carolina Avenue", wunderland: "Insel Capri Italien"},
       color: "green",
       price: 300,
       rent: [26, 130, 390, 900, 1100, 1275],
@@ -175,7 +175,7 @@ export type PropertyCard = {
       mortgageValue: 150,
     },
     {
-      name: "Pennsylvania Avenue",
+      name: {classic: "Pennsylvania Avenue", wunderland: "Las Vegas Amerika"},
       color: "green",
       price: 320,
       rent: [28, 150, 450, 1000, 1200, 1400],
@@ -183,7 +183,7 @@ export type PropertyCard = {
       mortgageValue: 160,
     },
     {
-      name: "Park Place",
+      name: {classic: "Park Place", wunderland: "Schloss Neuschwanstein Bayern"},
       color: "indigo",
       price: 350,
       rent: [35, 175, 500, 1100, 1300, 1500],
@@ -191,7 +191,7 @@ export type PropertyCard = {
       mortgageValue: 175,
     },
     {
-      name: "Boardwalk",
+      name: {classic: "Boardwalk", wunderland: "Elbphilharmonie Hamburg"},
       color: "indigo",
       price: 400,
       rent: [50, 200, 600, 1400, 1700, 2000],
