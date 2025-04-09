@@ -23,6 +23,7 @@ function App() {
     { id: idPlayer1, name: namePlayer1, score: 0 },
     { id: idPlayer2, name: namePlayer2, score: 0 },
   ]);
+  const [mode, setMode] = useState<'classic' | 'wunderland'>('wunderland');
 
   const addPlayer = () => {
     if (players.length >= 6) {
@@ -51,6 +52,11 @@ function App() {
     console.log(`Player is edited`);
   };
 
+  const modeButtonStyle ='w-[120px] border p-2 rounded-lg text-center'
+
+  const modeHandler = (selectedMode: 'classic' | 'wunderland') => {
+    setMode(selectedMode);
+  }
 
 
   return (
@@ -58,7 +64,8 @@ function App() {
       <div className="flex justify-center items-center m-5">
         <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-blue-500 to-yellow-600 bg-clip-text text-transparent text-center">
           Monopoly Calculator
-        </h1></div>
+        </h1>
+        </div>
       <div className='flex flex-col  md:flex-row w-[95%] m-auto justify-between md:justify-center items-center gap-2'>
         <div className="flex flex-wrap gap-4 justify-center">
           {players.map((player) => (
@@ -70,8 +77,13 @@ function App() {
           <button className='h-10 p-2 bg-blue-500 rounded-lg bg-[#eeeded] shadow-[4px_4px_8px_#777777,-4px_-4px_8px_#ffffff]' onClick={addPlayer}><UserRoundPlus color='white'/></button>
         </div>
       </div>
+      
+      <div className="flex gap-2 justify-end items-center m-5">
+          <div className={modeButtonStyle} onClick={()=> modeHandler("classic")}>Classic</div>
+          <div className={modeButtonStyle} onClick={()=> modeHandler("wunderland")}>Wunderland</div>
+        </div>
       <div>
-        <PropertyTable />
+        <PropertyTable mode={mode}/>
       </div>
     </>
   )

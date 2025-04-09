@@ -3,7 +3,23 @@ import { propertyCards } from "../../variables/cardsInfo";
 
 export const cellStyle = "border border-gray-400 p-2 text-center";
 
-const PropertyTable = () => {
+type PropertyCard = {
+    name: {
+        classic: string;
+        wunderland: string;
+    };
+    color: string;
+};
+
+// Define the type for the mode prop
+type Mode = "classic" | "wunderland";
+
+// Define the type for the PropertyTable props
+interface PropertyTableProps {
+    mode: Mode;
+}
+
+const PropertyTable = ({mode}: PropertyTableProps) => {
     return (
         <div>
             <table className="border border-gray-400 border-collapse text-center mt-3 mx-auto w-3/5">
@@ -16,8 +32,8 @@ const PropertyTable = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {propertyCards.map((card, index) => (
-                        <PropertyTableRow key={index} name={card.name.wunderland} color={card.color}  />
+                {propertyCards.map((card: PropertyCard, index) => (
+                        <PropertyTableRow key={index} name={card.name[mode]} color={card.color}  />
                     ))}
                 </tbody>
             </table>
