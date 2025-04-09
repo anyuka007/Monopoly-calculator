@@ -1,21 +1,23 @@
 import PropertyTableRow from "./PropertyTableRow";
 import { propertyCards } from "../../variables/cardsInfo";
 
+export const cellStyle = "border border-gray-400 p-2 text-center";
+
 const PropertyTable = () => {
     return (
         <div>
-            <table>
+            <table className="border border-gray-400 border-collapse text-center mt-3 mx-auto w-3/5">
                 <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Houses</th>
-                    <th>Hotels</th>
-                    <th>Mortgage</th>
+                <tr className="bg-gray-100">
+                    <th className={cellStyle}>Name</th>
+                    <th className={cellStyle}>Houses</th>
+                    <th className={cellStyle}>Hotel</th>
+                    <th className={cellStyle}>Mortgage</th>
                 </tr>
                 </thead>
                 <tbody>
                 {propertyCards.map((card, index) => (
-                        <PropertyTableRow key={index} name={card.name}  />
+                        <PropertyTableRow key={index} name={card.name} color={card.color}  />
                     ))}
                 </tbody>
             </table>

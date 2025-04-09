@@ -24,7 +24,7 @@ export type PropertyCard = {
   export const propertyCards: PropertyCard[] = [
     {
       name: "Mediterranean Avenue",
-      color: "Brown",
+      color: "brown",
       price: 60,
       rent: [2, 10, 30, 90, 160, 250],
       houseCost: 50,
@@ -32,7 +32,7 @@ export type PropertyCard = {
     },
     {
       name: "Baltic Avenue",
-      color: "Brown",
+      color: "brown",
       price: 60,
       rent: [4, 20, 60, 180, 320, 450],
       houseCost: 50,
@@ -40,7 +40,7 @@ export type PropertyCard = {
     },
     {
       name: "Oriental Avenue",
-      color: "Light Blue",
+      color: "sky",
       price: 100,
       rent: [6, 30, 90, 270, 400, 550],
       houseCost: 50,
@@ -48,7 +48,7 @@ export type PropertyCard = {
     },
     {
       name: "Vermont Avenue",
-      color: "Light Blue",
+      color: "sky",
       price: 100,
       rent: [6, 30, 90, 270, 400, 550],
       houseCost: 50,
@@ -56,7 +56,7 @@ export type PropertyCard = {
     },
     {
       name: "Connecticut Avenue",
-      color: "Light Blue",
+      color: "sky",
       price: 120,
       rent: [8, 40, 100, 300, 450, 600],
       houseCost: 50,
@@ -64,7 +64,7 @@ export type PropertyCard = {
     },
     {
       name: "St. Charles Place",
-      color: "Pink",
+      color: "pink",
       price: 140,
       rent: [10, 50, 150, 450, 625, 750],
       houseCost: 100,
@@ -72,7 +72,7 @@ export type PropertyCard = {
     },
     {
       name: "States Avenue",
-      color: "Pink",
+      color: "pink",
       price: 140,
       rent: [10, 50, 150, 450, 625, 750],
       houseCost: 100,
@@ -80,7 +80,7 @@ export type PropertyCard = {
     },
     {
       name: "Virginia Avenue",
-      color: "Pink",
+      color: "pink",
       price: 160,
       rent: [12, 60, 180, 500, 700, 900],
       houseCost: 100,
@@ -88,7 +88,7 @@ export type PropertyCard = {
     },
     {
       name: "St. James Place",
-      color: "Orange",
+      color: "orange",
       price: 180,
       rent: [14, 70, 200, 550, 750, 950],
       houseCost: 100,
@@ -96,7 +96,7 @@ export type PropertyCard = {
     },
     {
       name: "Tennessee Avenue",
-      color: "Orange",
+      color: "orange",
       price: 180,
       rent: [14, 70, 200, 550, 750, 950],
       houseCost: 100,
@@ -104,7 +104,7 @@ export type PropertyCard = {
     },
     {
       name: "New York Avenue",
-      color: "Orange",
+      color: "orange",
       price: 200,
       rent: [16, 80, 220, 600, 800, 1000],
       houseCost: 100,
@@ -112,7 +112,7 @@ export type PropertyCard = {
     },
     {
       name: "Kentucky Avenue",
-      color: "Red",
+      color: "red",
       price: 220,
       rent: [18, 90, 250, 700, 875, 1050],
       houseCost: 150,
@@ -120,7 +120,7 @@ export type PropertyCard = {
     },
     {
       name: "Indiana Avenue",
-      color: "Red",
+      color: "red",
       price: 220,
       rent: [18, 90, 250, 700, 875, 1050],
       houseCost: 150,
@@ -128,7 +128,7 @@ export type PropertyCard = {
     },
     {
       name: "Illinois Avenue",
-      color: "Red",
+      color: "red",
       price: 240,
       rent: [20, 100, 300, 750, 925, 1100],
       houseCost: 150,
@@ -136,7 +136,7 @@ export type PropertyCard = {
     },
     {
       name: "Atlantic Avenue",
-      color: "Yellow",
+      color: "yellow",
       price: 260,
       rent: [22, 110, 330, 800, 975, 1150],
       houseCost: 150,
@@ -144,7 +144,7 @@ export type PropertyCard = {
     },
     {
       name: "Ventnor Avenue",
-      color: "Yellow",
+      color: "yellow",
       price: 260,
       rent: [22, 110, 330, 800, 975, 1150],
       houseCost: 150,
@@ -152,7 +152,7 @@ export type PropertyCard = {
     },
     {
       name: "Marvin Gardens",
-      color: "Yellow",
+      color: "yellow",
       price: 280,
       rent: [24, 120, 360, 850, 1025, 1200],
       houseCost: 150,
@@ -160,7 +160,7 @@ export type PropertyCard = {
     },
     {
       name: "Pacific Avenue",
-      color: "Green",
+      color: "green",
       price: 300,
       rent: [26, 130, 390, 900, 1100, 1275],
       houseCost: 200,
@@ -168,7 +168,7 @@ export type PropertyCard = {
     },
     {
       name: "North Carolina Avenue",
-      color: "Green",
+      color: "green",
       price: 300,
       rent: [26, 130, 390, 900, 1100, 1275],
       houseCost: 200,
@@ -176,7 +176,7 @@ export type PropertyCard = {
     },
     {
       name: "Pennsylvania Avenue",
-      color: "Green",
+      color: "green",
       price: 320,
       rent: [28, 150, 450, 1000, 1200, 1400],
       houseCost: 200,
@@ -184,7 +184,7 @@ export type PropertyCard = {
     },
     {
       name: "Park Place",
-      color: "Dark Blue",
+      color: "indigo",
       price: 350,
       rent: [35, 175, 500, 1100, 1300, 1500],
       houseCost: 200,
@@ -192,7 +192,7 @@ export type PropertyCard = {
     },
     {
       name: "Boardwalk",
-      color: "Dark Blue",
+      color: "indigo",
       price: 400,
       rent: [50, 200, 600, 1400, 1700, 2000],
       houseCost: 200,
