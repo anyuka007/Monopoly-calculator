@@ -13,7 +13,7 @@ type PropertyTableRowProps = {
         
 
     };
-
+    onRowTotalChange: (total: number) => void;
 };
 
 const labelStyle =
@@ -31,7 +31,7 @@ const labelStyle =
         
     };
 
-const PropertyTableRow = ({ mode, card }: PropertyTableRowProps) => {
+const PropertyTableRow = ({ mode, card, onRowTotalChange }: PropertyTableRowProps) => {
     const [totalRow, setTotalRow] = useState(0);
     const [isCardChecked, setIsCardChecked] = useState(false);
     const [housesChecked, setHousesChecked] = useState(0);
@@ -75,6 +75,8 @@ const PropertyTableRow = ({ mode, card }: PropertyTableRowProps) => {
         if (isHotelChecked) total += card.houseCost;
         if (isMortgageChecked) total -= card.price / 2;
         setTotalRow(total);
+        onRowTotalChange(total); 
+        
       }, [isCardChecked, housesChecked, isHotelChecked, isMortgageChecked, card.price, card.houseCost]);
 
     return (

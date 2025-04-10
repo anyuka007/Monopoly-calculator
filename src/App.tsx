@@ -88,6 +88,35 @@ const updateCash = (id: string, cash: number) => {
 
 }
 
+const updateProperties = (playerId: string, properties: number) => {
+  const updatedPlayers = players.map((player) => {
+    if (player.id === playerId) {
+      return {
+        ...player,
+        score: {
+          ...player.score,
+          properties: properties,
+          total: player.score.cash + properties + player.score.railroads + player.score.utilities, // Aktualisiere total
+        },
+      };
+    }
+    return player;
+  });
+  setPlayers(updatedPlayers);
+
+  if (selectedPlayer?.id === playerId) {
+    setSelectedPlayer({
+      ...selectedPlayer,
+      score: {
+        ...selectedPlayer.score,
+        properties: properties,
+        total: selectedPlayer.score.cash + properties + selectedPlayer.score.railroads + selectedPlayer.score.utilities,
+      },
+    });
+  }
+  console.log(`Player ${playerId} properties updated to ${properties}`);
+};
+
   const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
     `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 ${mode === buttonMode
       ? "bg-blue-500 text-white shadow-md"
@@ -139,7 +168,10 @@ const updateCash = (id: string, cash: number) => {
         <div className={modeButtonStyle("wunderland")} onClick={() => modeHandler("wunderland")}>Wunderland</div>
       </div>
       <div>
-        <PropertyTable mode={mode} />
+        <PropertyTable 
+        mode={mode}
+        selectedPlayer= {selectedPlayer}
+        updateProperties={updateProperties} />
       </div>
     </>
   )

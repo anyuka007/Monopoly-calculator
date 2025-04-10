@@ -6,7 +6,7 @@ type CashProps = {
     updateCash: (id: string, cash: number) => void;
 }
 
-const OkButtonStyle = "w-10 border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 bg-yellow-500 text-white shadow-md"
+export const OkButtonStyle = "w-16 border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 bg-yellow-500 text-white shadow-md"
 
 const Cash = ({ selectedPlayer, updateCash }: CashProps) => {
     const [amount, setAmount] = useState<number>(selectedPlayer ? selectedPlayer.score.cash : 0);
