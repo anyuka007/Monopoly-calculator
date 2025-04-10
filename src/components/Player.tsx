@@ -6,7 +6,7 @@ const iconSize = 20;
 
 export type PlayerProps = {
     name: string;
-    score: number;
+    score: {cash: number, properties: number, railroads: number, utilities: number, total: number};
     deleteHandler: () => void;
     editHandler: (newName: string) => void;
     setSelectedPlayer: () => void;
@@ -68,7 +68,7 @@ const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer }: 
                 )}
             </div>
             <div className="bg-yellow-500 w-full h-[50%] flex justify-center items-center rounded-b-lg" onDoubleClick={() => setSelectedPlayer()}>
-                <p className="text-2xl text-white">{score}</p>
+                <p className="text-2xl text-white">{score.total}</p>
             </div>
         </div>
     );

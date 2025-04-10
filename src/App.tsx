@@ -9,7 +9,7 @@ import Cash from './components/Cash';
 
 export type Player = {
   name: string;
-  score: number;
+  score: {cash: number, properties: number, railroads: number, utilities: number, total: number};
   id: string;
 }
 
@@ -21,8 +21,8 @@ function App() {
   const namePlayer1: string = generateRandomName();
   const namePlayer2: string = generateRandomName();
   const [players, setPlayers] = useState<PlayersState>([
-    { id: idPlayer1, name: namePlayer1, score: 0 },
-    { id: idPlayer2, name: namePlayer2, score: 0 },
+    { id: idPlayer1, name: namePlayer1, score: {cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0} },
+    { id: idPlayer2, name: namePlayer2, score: {cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0} },
   ]);
   const [mode, setMode] = useState<'classic' | 'wunderland'>('wunderland');
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
@@ -32,7 +32,7 @@ function App() {
       alert('Cannot add more than 6 players');
       return;
     }
-    const newPlayer: Player = { id: generateId(), name: generateRandomName(), score: 0 };
+    const newPlayer: Player = { id: generateId(), name: generateRandomName(), score: {cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0} };
     setPlayers([...players, newPlayer]);
     console.log(`Player ${newPlayer.name} is added`);
   }
@@ -62,13 +62,31 @@ function App() {
 const updateCash = (id: string, cash: number) => {
   const updatedPlayers = players.map((player) => {  
     if (player.id === id) {
-      return { ...player, score: cash };
+      const updatedScore = {
+        ...player.score,
+        cash: cash,
+        total: cash + player.score.properties + player.score.railroads + player.score.utilities, // Berechne total neu
+      };
+      return { ...player, score: updatedScore };
     }
     return player;
   }
   );
   setPlayers(updatedPlayers);
-  console.log(`Player ${id} cash is updated`);}
+
+  if (selectedPlayer?.id === id) {
+    setSelectedPlayer({
+      ...selectedPlayer,
+      score: {
+        ...selectedPlayer.score,
+        cash: cash,
+        total: cash + selectedPlayer.score.properties + selectedPlayer.score.railroads + selectedPlayer.score.utilities,
+      },
+    });
+  }
+  console.log(`Player ${id} cash is updated`);
+
+}
 
   const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
     `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 ${mode === buttonMode
@@ -98,7 +116,7 @@ const updateCash = (id: string, cash: number) => {
         </div>
 
         <div className='flex justify-center items-center'>
-          <button className='h-10 p-2 bg-blue-500 rounded-lg bg-[#eeeded] shadow-[4px_4px_8px_#777777,-4px_-4px_8px_#ffffff]' onClick={addPlayer}><UserRoundPlus color='white' /></button>
+          <button className='h-10 p-2 bg-blue-500 rounded-lg shadow-[4px_4px_8px_#777777,-4px_-4px_8px_#ffffff]' onClick={addPlayer}><UserRoundPlus color='white' /></button>
         </div>
       </div>
 
@@ -106,7 +124,11 @@ const updateCash = (id: string, cash: number) => {
         <div className="mt-4 text-center">
           <h2 className="text-xl font-bold">Selected Player:</h2>
           <p className="text-lg">{selectedPlayer.name}</p>
-          <p className="text-sm text-gray-500">Score: {selectedPlayer.score}</p>
+          <p className="text-sm text-gray-500">Cash: {selectedPlayer.score.cash}</p>
+          <p className="text-sm text-gray-500">Property: {selectedPlayer.score.properties}</p>
+          <p className="text-sm text-gray-500">Railroads: {selectedPlayer.score.railroads}</p>
+          <p className="text-sm text-gray-500">Utilities: {selectedPlayer.score.utilities}</p>
+          <p className="text-sm text-gray-500">Total: {selectedPlayer.score.total}</p>
         </div>
       )}
 

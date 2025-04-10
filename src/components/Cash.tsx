@@ -9,13 +9,13 @@ type CashProps = {
 const OkButtonStyle = "w-10 border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 bg-yellow-500 text-white shadow-md"
 
 const Cash = ({ selectedPlayer, updateCash }: CashProps) => {
-    const [amount, setAmount] = useState<number>(0);
+    const [amount, setAmount] = useState<number>(selectedPlayer ? selectedPlayer.score.cash : 0);
 
     useEffect(() => {
         if (selectedPlayer) {
-          setAmount(selectedPlayer.score); 
+          setAmount(selectedPlayer.score.cash); 
         } else {
-          setAmount(0); // Setze `amount` auf 0, wenn kein Spieler ausgewählt ist
+          setAmount(0); 
         }
       }, [selectedPlayer]);
     
