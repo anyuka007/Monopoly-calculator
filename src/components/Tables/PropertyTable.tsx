@@ -4,15 +4,16 @@ import { propertyCards } from "../../variables/cardsInfo";
 export const cellStyle = "border border-gray-400 p-2 text-center";
 
 type PropertyCard = {
-    name: {
-        classic: string;
-        wunderland: string;
-    };
-    color: string;
+    name: { classic: string; wunderland: string };
+        color: string;
+        price: number;
+        rent: number[];
+        houseCost: number;
+        mortgageValue: number;
 };
 
 // Define the type for the mode prop
-type Mode = "classic" | "wunderland";
+export type Mode = "classic" | "wunderland";
 
 // Define the type for the PropertyTable props
 type PropertyTableProps = {
@@ -26,14 +27,17 @@ const PropertyTable = ({mode}: PropertyTableProps) => {
                 <thead>
                 <tr className="bg-gray-100">
                     <th className={cellStyle}>Name</th>
+                    <th className={cellStyle}>Price</th>
+                    <th className={cellStyle}>Got</th>
                     <th className={cellStyle}>Houses</th>
                     <th className={cellStyle}>Hotel</th>
                     <th className={cellStyle}>Mortgage</th>
+                    <th className={cellStyle}>Total</th>
                 </tr>
                 </thead>
                 <tbody>
                 {propertyCards.map((card: PropertyCard, index) => (
-                        <PropertyTableRow key={index} name={card.name[mode]} color={card.color}  />
+                        <PropertyTableRow key={index} /* name={card.name[mode]} price={card.price} color={card.color} */  mode = {mode} card={card}/>
                     ))}
                 </tbody>
             </table>
