@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cellStyle, Mode } from "./PropertyTable";
 
 type PropertyTableRowProps = {
@@ -68,15 +68,14 @@ const PropertyTableRow = ({ mode, card }: PropertyTableRowProps) => {
         setIsMortgageChecked(!isMortgageChecked);
     };
 
-    const total = () => {
+    useEffect(() => {
         let total = 0;
         if (isCardChecked) total += card.price;
-        if (housesChecked) total += card.houseCost * housesChecked
-        if (isHotelChecked) total += card.houseCost; 
-        if (isMortgageChecked) total -= card.price/2; 
+        if (housesChecked) total += card.houseCost * housesChecked;
+        if (isHotelChecked) total += card.houseCost;
+        if (isMortgageChecked) total -= card.price / 2;
         setTotalRow(total);
-        return total;
-    }
+      }, [isCardChecked, housesChecked, isHotelChecked, isMortgageChecked, card.price, card.houseCost]);
 
     return (
         <tr>
@@ -170,8 +169,7 @@ const PropertyTableRow = ({ mode, card }: PropertyTableRowProps) => {
             </td>
             <td >
                 <div >
-                    <p>{totalRow}</p>
-                    <button onClick={total}>Calc</button></div>
+                    <p>{totalRow}</p></div>
             </td>
         </tr>
     );
