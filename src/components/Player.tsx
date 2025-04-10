@@ -9,9 +9,10 @@ export type PlayerProps = {
     score: number;
     deleteHandler: () => void;
     editHandler: (newName: string) => void;
+    setSelectedPlayer: () => void;
 }
 
-const Player = ({ name, score, deleteHandler, editHandler }: PlayerProps) => {
+const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer }: PlayerProps) => {
 
     const [isEditMode, setIsEditMode] = useState(false);
     const [newName, setNewName] = useState(name);
@@ -66,7 +67,7 @@ const Player = ({ name, score, deleteHandler, editHandler }: PlayerProps) => {
                     </div>
                 )}
             </div>
-            <div className="bg-yellow-500 w-full h-[50%] flex justify-center items-center rounded-b-lg">
+            <div className="bg-yellow-500 w-full h-[50%] flex justify-center items-center rounded-b-lg" onDoubleClick={() => setSelectedPlayer()}>
                 <p className="text-2xl text-white">{score}</p>
             </div>
         </div>

@@ -5,6 +5,7 @@ import Player from './components/Player'
 import { generateId } from './utils/generateId';
 import { generateRandomName } from './utils/generateName';
 import PropertyTable from './components/Tables/PropertyTable';
+import Cash from './components/Cash';
 
 type Player = {
   name: string;
@@ -24,6 +25,7 @@ function App() {
     { id: idPlayer2, name: namePlayer2, score: 0 },
   ]);
   const [mode, setMode] = useState<'classic' | 'wunderland'>('wunderland');
+  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
 
   const addPlayer = () => {
     if (players.length >= 6) {
@@ -52,12 +54,17 @@ function App() {
     console.log(`Player is edited`);
   };
 
+  const selectPlayer = (id: string) => {
+  const selPlayer = players.find((player) => player.id === id) || null;
+  setSelectedPlayer(selPlayer);
+};
+
   const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
-    `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 ${
-      mode === buttonMode
-        ? "bg-blue-500 text-white shadow-md"
-        : "bg-gray-200 text-black hover:bg-gray-300"
+    `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 ${mode === buttonMode
+      ? "bg-blue-500 text-white shadow-md"
+      : "bg-gray-200 text-black hover:bg-gray-300"
     }`;
+
 
   const modeHandler = (selectedMode: 'classic' | 'wunderland') => {
     setMode(selectedMode);
@@ -70,25 +77,36 @@ function App() {
         <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-blue-500 to-yellow-600 bg-clip-text text-transparent text-center">
           Monopoly Calculator
         </h1>
-        </div>
+      </div>
       <div className='flex flex-col  md:flex-row w-[95%] m-auto justify-between md:justify-center items-center gap-2'>
         <div className="flex flex-wrap gap-4 justify-center">
           {players.map((player) => (
-            <Player key={player.id} name={player.name} score={player.score} deleteHandler={() => deletePlayer(player.id)} editHandler={(newName) => editPlayer(player.id, newName)} />
+            <Player key={player.id} name={player.name} score={player.score} deleteHandler={() => deletePlayer(player.id)} editHandler={(newName) => editPlayer(player.id, newName)} 
+            setSelectedPlayer={() => selectPlayer(player.id)} />
           ))}
-          </div>
+        </div>
 
         <div className='flex justify-center items-center'>
-          <button className='h-10 p-2 bg-blue-500 rounded-lg bg-[#eeeded] shadow-[4px_4px_8px_#777777,-4px_-4px_8px_#ffffff]' onClick={addPlayer}><UserRoundPlus color='white'/></button>
+          <button className='h-10 p-2 bg-blue-500 rounded-lg bg-[#eeeded] shadow-[4px_4px_8px_#777777,-4px_-4px_8px_#ffffff]' onClick={addPlayer}><UserRoundPlus color='white' /></button>
         </div>
       </div>
-      
-      <div className="flex gap-2 justify-end items-center m-5">
-          <div className={modeButtonStyle("classic")} onClick={()=> modeHandler("classic")}>Classic</div>
-          <div className={modeButtonStyle("wunderland")} onClick={()=> modeHandler("wunderland")}>Wunderland</div>
+
+      {selectedPlayer && (
+        <div className="mt-4 text-center">
+          <h2 className="text-xl font-bold">Selected Player:</h2>
+          <p className="text-lg">{selectedPlayer.name}</p>
+          <p className="text-sm text-gray-500">Score: {selectedPlayer.score}</p>
         </div>
+      )}
+
+      <Cash />
+
+      <div className="flex gap-2 justify-end items-center m-5">
+        <div className={modeButtonStyle("classic")} onClick={() => modeHandler("classic")}>Classic</div>
+        <div className={modeButtonStyle("wunderland")} onClick={() => modeHandler("wunderland")}>Wunderland</div>
+      </div>
       <div>
-        <PropertyTable mode={mode}/>
+        <PropertyTable mode={mode} />
       </div>
     </>
   )
