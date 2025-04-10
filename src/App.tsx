@@ -7,7 +7,7 @@ import { generateRandomName } from './utils/generateName';
 import PropertyTable from './components/Tables/PropertyTable';
 import Cash from './components/Cash';
 
-type Player = {
+export type Player = {
   name: string;
   score: number;
   id: string;
@@ -59,6 +59,17 @@ function App() {
   setSelectedPlayer(selPlayer);
 };
 
+const updateCash = (id: string, cash: number) => {
+  const updatedPlayers = players.map((player) => {  
+    if (player.id === id) {
+      return { ...player, score: cash };
+    }
+    return player;
+  }
+  );
+  setPlayers(updatedPlayers);
+  console.log(`Player ${id} cash is updated`);}
+
   const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
     `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 ${mode === buttonMode
       ? "bg-blue-500 text-white shadow-md"
@@ -99,7 +110,7 @@ function App() {
         </div>
       )}
 
-      <Cash />
+      <Cash selectedPlayer={selectedPlayer} updateCash={updateCash}/>
 
       <div className="flex gap-2 justify-end items-center m-5">
         <div className={modeButtonStyle("classic")} onClick={() => modeHandler("classic")}>Classic</div>
