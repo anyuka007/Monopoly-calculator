@@ -20,7 +20,7 @@ type PropertyTableRowProps = {
 };
 
 const labelStyle =
-    "w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center peer-checked:bg-blue-500 peer-checked:text-white";
+    "w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center peer-checked:bg-blue-500 peer-checked:text-white hover:scale-110 hover:border-blue-500 hover:border-3 ";
 
     const colors: { [key: string]: string } = {
         brown: "bg-[#A13C33]",
@@ -111,7 +111,7 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
     <label
         htmlFor={`checkbox1-${nameJoined}`}
         className="w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  peer-checked:bg-lime-500 peer-checked:text-white transition-all duration-200
-             before:content-[''] peer-checked:before:content-['✓'] before:text-lg"
+             before:content-[''] peer-checked:before:content-['✓'] before:text-lg hover:scale-110 hover:border-lime-500 hover:border-3 "
     >
         <span className="hidden peer-checked:inline-block">✓</span>
     </label>
@@ -156,7 +156,7 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
     <label
         htmlFor={`checkbox2-${nameJoined}`}
         className="w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center peer-checked:bg-green-500 peer-checked:text-white transition-all duration-200
-             before:content-[''] peer-checked:before:content-['✓'] before:text-lg"
+             before:content-[''] peer-checked:before:content-['✓'] before:text-lg hover:scale-110 hover:border-green-500 hover:border-3 "
     >
     </label>
 </div>
@@ -175,7 +175,7 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
     <label
         htmlFor={`checkbox3-${nameJoined}`}
         className="w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  peer-checked:bg-lime-500 peer-checked:text-white transition-all duration-200
-             before:content-[''] peer-checked:before:content-['✓'] before:text-lg"
+             before:content-[''] peer-checked:before:content-['✓'] before:text-lg hover:scale-110 hover:border-lime-500 hover:border-3 "
     >
         <span className="hidden peer-checked:inline-block">✓</span>
     </label>
