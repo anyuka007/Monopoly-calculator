@@ -41,6 +41,7 @@ function App() {
   const deletePlayer = (id: string) => {
     const updatedPlayers = players.filter((player) => player.id !== id);
     setPlayers(updatedPlayers);
+    setSelectedPlayer(null); 
     console.log(`Player is deleted`);
   };
 
@@ -52,6 +53,14 @@ function App() {
       return player;
     });
     setPlayers(updatedPlayers);
+
+    if (selectedPlayer?.id === id) {
+      setSelectedPlayer({
+          ...selectedPlayer,
+          name: newName,
+      });
+  }
+
     console.log(`Player is edited`);
   };
 
@@ -137,7 +146,7 @@ const updateProperties = (playerId: string, properties: number) => {
           Monopoly Calculator
         </h1>
       </div>
-      <div className='flex flex-col  md:flex-row w-[95%] m-auto justify-between md:justify-center items-center gap-2'>
+      <div className='flex flex-col  md:flex-row w-[95%] m-auto justify-between md:justify-center items-center gap-5'>
         <div className="flex flex-wrap gap-4 justify-center">
           {players.map((player) => (
             <Player 
@@ -169,7 +178,7 @@ const updateProperties = (playerId: string, properties: number) => {
 
       <Cash selectedPlayer={selectedPlayer} updateCash={updateCash}/>
 
-      <div className="flex gap-2 justify-end items-center m-5">
+      <div className="flex w-3/5 mx-auto gap-2 justify-end items-center m-5">
         <div className={modeButtonStyle("classic")} onClick={() => modeHandler("classic")}>Classic</div>
         <div className={modeButtonStyle("wunderland")} onClick={() => modeHandler("wunderland")}>Wunderland</div>
       </div>
