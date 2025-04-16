@@ -10,9 +10,11 @@ type PropertyTableRowProps = {
         rent: number[];
         houseCost: number;
         mortgageValue: number;
+       
         
 
-    };
+    }; 
+    clearSignal: boolean;
     onRowTotalChange: (total: number) => void;
 };
 
@@ -31,7 +33,7 @@ const labelStyle =
         
     };
 
-const PropertyTableRow = ({ mode, card, onRowTotalChange }: PropertyTableRowProps) => {
+const PropertyTableRow = ({ mode, card, onRowTotalChange, clearSignal }: PropertyTableRowProps) => {
     const [totalRow, setTotalRow] = useState(0);
     const [isCardChecked, setIsCardChecked] = useState(false);
     const [housesChecked, setHousesChecked] = useState(0);
@@ -67,6 +69,15 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange }: PropertyTableRowProp
     const handleMortgageCheck = () => {
         setIsMortgageChecked(!isMortgageChecked);
     };
+
+    useEffect(() => {
+        setIsCardChecked(false);
+        setHousesChecked(0);
+        setIsHotelChecked(false);
+        setIsMortgageChecked(false);
+        setTotalRow(0);
+        onRowTotalChange(0); // Wichtig: Damit Parent die Änderung bekommt
+    }, [clearSignal]);
 
     useEffect(() => {
         let total = 0;

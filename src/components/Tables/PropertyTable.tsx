@@ -1,6 +1,6 @@
 import PropertyTableRow from "./PropertyTableRow";
 import { propertyCards } from "../../variables/cardsInfo";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Player } from "../../App";
 import { OkButtonStyle } from "../Cash";
 
@@ -27,6 +27,20 @@ type PropertyTableProps = {
 
 const PropertyTable = ({ mode, selectedPlayer, updateProperties }: PropertyTableProps) => {
     const [rowTotals, setRowTotals] = useState<number[]>([]);
+    const [clearSignal, setClearSignal] = useState(false); 
+
+    const previousPlayerRef = useRef<Player | null>(null);
+
+    useEffect(() => {
+        if (
+            selectedPlayer &&
+            selectedPlayer.id !== previousPlayerRef.current?.id
+        ) {
+            setClearSignal(prev => !prev);
+            setRowTotals([]);              
+        }
+        previousPlayerRef.current = selectedPlayer;
+    }, [selectedPlayer]);
 
 
     const handleRowTotalChange = (index: number, total: number) => {
@@ -47,8 +61,15 @@ const PropertyTable = ({ mode, selectedPlayer, updateProperties }: PropertyTable
         }
     }
 
+    const onClearHandler = () => {
+        setClearSignal(prev => !prev); 
+        setRowTotals([]);
+    };
+
     return (
-        <div>            
+        <div>   
+            <div className="w-3/5 mx-auto flex gap-2 justify-end items-center mt-3">
+                <button onClick={onClearHandler} className={OkButtonStyle}>Clear</button></div>         
             <table className="border border-gray-400 border-collapse text-center mt-3 mx-auto w-3/5">
                 <thead>
                     <tr className="bg-gray-100">
@@ -63,10 +84,12 @@ const PropertyTable = ({ mode, selectedPlayer, updateProperties }: PropertyTable
                 </thead>
                 <tbody>
                     {propertyCards.map((card: PropertyCard, index) => (
-                        <PropertyTableRow key={index}
+                        <PropertyTableRow 
+                            key={index}
                             mode={mode}
                             card={card}
-                            onRowTotalChange={(total: number) => handleRowTotalChange(index, total)} />
+                            onRowTotalChange={(total: number) => handleRowTotalChange(index, total)}
+                            clearSignal={clearSignal} />
                     ))}
                 </tbody>
             </table>
