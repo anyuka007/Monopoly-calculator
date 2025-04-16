@@ -6,6 +6,7 @@ import { generateId } from './utils/generateId';
 import { generateRandomName } from './utils/generateName';
 import PropertyTable from './components/Tables/PropertyTable';
 import Cash from './components/Cash';
+import RailroadsTable from './components/Tables/RailRoadsTable';
 
 export type Player = {
   name: string;
@@ -172,6 +173,9 @@ const updateProperties = (playerId: string, properties: number) => {
         mode={mode}
         selectedPlayer= {selectedPlayer}
         updateProperties={updateProperties} />
+      </div>
+      <div>
+        <RailroadsTable />  
       </div>
     </>
   )

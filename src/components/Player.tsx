@@ -1,5 +1,5 @@
 import { Pencil, Trash2, X, Check } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const iconStyle = "text-white";
 const iconSize = 20;
@@ -16,27 +16,51 @@ const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer }: 
 
     const [isEditMode, setIsEditMode] = useState(false);
     const [newName, setNewName] = useState(name);
+    const [isSelected, setIsSelected] = useState(false);
+    // Ref for the Player container
+    const playerRef = useRef<HTMLDivElement>(null);
+
+    // Handle clicks outside the Player component
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (playerRef.current && !playerRef.current.contains(event.target as Node)) {
+                setIsSelected(false); // Deselect the player
+                setIsEditMode(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
 
     const onEdit = () => {
         setIsEditMode(true);
+        setIsSelected(true);
         console.log(`Player ${name} is in edit mode`);     
     }
 
     const onSave = () => {
         editHandler(newName);
         setIsEditMode(false);
+        setIsSelected(false);
         console.log(`Player ${name} is saved`);
     }
 
     const onCancel = () => {
         setNewName(name);
-        setIsEditMode(false);        
+        setIsEditMode(false);  
+        setIsSelected(false);      
         console.log(`Player ${name} is cancelled`);
     }
 
     return (
-        <div className="player flex flex-col justify-center items-center m-2 rounded-lg w-[300px] md:w-[250px] h-[100px] bg-[#eeeded] shadow-[12px_12px_24px_#777777,-12px_-12px_24px_#ffffff]" >
-            <div className="bg-blue-500 h-[50%] w-full flex justify-between items-center p-2 rounded-t-lg">
+        <div 
+        ref={playerRef} // Attach the ref to the Player container
+        className={`player flex flex-col justify-center items-center m-2 rounded-lg w-[300px] md:w-[250px] h-[100px] bg-[#eeeded] ${isSelected ? "shadow-[inset 12px_12px_24px_#777777,inset -12px_-12px_24px_#ffffff]" : "shadow-[12px_12px_24px_#777777,-12px_-12px_24px_#ffffff]"}`} >
+            <div onDoubleClick={onEdit} className="bg-blue-500 h-[50%] w-full flex justify-between items-center p-2 rounded-t-lg">
                 {!isEditMode ? (
                     <p className="truncate w-[80%] text-white">{name}</p>
                 ) : (
@@ -67,7 +91,7 @@ const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer }: 
                     </div>
                 )}
             </div>
-            <div className="bg-yellow-500 w-full h-[50%] flex justify-center items-center rounded-b-lg" onDoubleClick={() => setSelectedPlayer()}>
+            <div className="bg-yellow-500 w-full h-[50%] flex justify-center items-center rounded-b-lg" onDoubleClick={() => {setSelectedPlayer() ; setIsSelected(!isSelected)}}>
                 <p className="text-2xl text-white">{score.total}</p>
             </div>
         </div>

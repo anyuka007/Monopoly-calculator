@@ -27,7 +27,7 @@ const Cash = ({ selectedPlayer, updateCash }: CashProps) => {
         if (selectedPlayer) {
             updateCash(selectedPlayer.id, amount);
         } else {
-            console.error("No player selected");
+            alert("No player selected");
         }
     }
 

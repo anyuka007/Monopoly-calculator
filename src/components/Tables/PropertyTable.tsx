@@ -27,7 +27,7 @@ type PropertyTableProps = {
 
 const PropertyTable = ({ mode, selectedPlayer, updateProperties }: PropertyTableProps) => {
     const [rowTotals, setRowTotals] = useState<number[]>([]);
-    const [clearSignal, setClearSignal] = useState(false); // to trigger a reset of all rows in the table
+    const [clearFlag, setClearFlag] = useState(false); // to trigger a reset of all rows in the table
 
     // Ref to track the previously selected player
     const previousPlayerRef = useRef<Player | null>(null);
@@ -38,7 +38,7 @@ const PropertyTable = ({ mode, selectedPlayer, updateProperties }: PropertyTable
             selectedPlayer &&
             selectedPlayer.id !== previousPlayerRef.current?.id
         ) {
-            setClearSignal(prev => !prev); // Toggle the clear signal
+            setClearFlag(prev => !prev); // Toggle the clear signal
             setRowTotals([]);              
         }
         previousPlayerRef.current = selectedPlayer;
@@ -66,7 +66,7 @@ const PropertyTable = ({ mode, selectedPlayer, updateProperties }: PropertyTable
 
     // Clears the table
     const onClearHandler = () => {
-        setClearSignal(prev => !prev); 
+        setClearFlag(prev => !prev); 
         setRowTotals([]);
     };
 
@@ -97,7 +97,7 @@ const PropertyTable = ({ mode, selectedPlayer, updateProperties }: PropertyTable
                             mode={mode} // Current game mode
                             card={card}
                             onRowTotalChange={(total: number) => handleRowTotalChange(index, total)}
-                            clearSignal={clearSignal} // Signal to clear the row
+                            clearFlag={clearFlag} // Signal to clear the row
                             />
                     ))}
                 </tbody>

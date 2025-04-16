@@ -201,7 +201,7 @@ export type PropertyCard = {
   ];
 
 
-  export const railroadsAndUtilities: RailroadCard[] = [
+  export const railroads: RailroadCard[] = [
     {
       name: "Reading Railroad",
       price: 200,

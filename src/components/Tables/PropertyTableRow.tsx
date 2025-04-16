@@ -14,7 +14,8 @@ type PropertyTableRowProps = {
         
 
     }; 
-    clearSignal: boolean;
+    clearFlag: boolean; // Flag identifies that number of houses and hotels is 0
+    // Function to handle the total change for this row
     onRowTotalChange: (total: number) => void;
 };
 
@@ -33,7 +34,7 @@ const labelStyle =
         
     };
 
-const PropertyTableRow = ({ mode, card, onRowTotalChange, clearSignal }: PropertyTableRowProps) => {
+const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }: PropertyTableRowProps) => {
     const [totalRow, setTotalRow] = useState(0);
     const [isCardChecked, setIsCardChecked] = useState(false);
     const [housesChecked, setHousesChecked] = useState(0);
@@ -77,7 +78,7 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearSignal }: Propert
         setIsMortgageChecked(false);
         setTotalRow(0);
         onRowTotalChange(0); // Wichtig: Damit Parent die Änderung bekommt
-    }, [clearSignal]);
+    }, [clearFlag]);
 
     useEffect(() => {
         let total = 0;
