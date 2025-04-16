@@ -28,6 +28,7 @@ type PropertyTableProps = {
 const PropertyTable = ({ mode, selectedPlayer, updateProperties }: PropertyTableProps) => {
     const [rowTotals, setRowTotals] = useState<number[]>([]);
     const [clearFlag, setClearFlag] = useState(false); // to trigger a reset of all rows in the table
+    const [error, setError] = useState<string | null>(null); // to display error messages
 
     // Ref to track the previously selected player
     const previousPlayerRef = useRef<Player | null>(null);
@@ -39,7 +40,7 @@ const PropertyTable = ({ mode, selectedPlayer, updateProperties }: PropertyTable
             selectedPlayer.id !== previousPlayerRef.current?.id
         ) {
             setClearFlag(prev => !prev); // Toggle the clear signal
-            setRowTotals([]);              
+            setRowTotals([]);
         }
         previousPlayerRef.current = selectedPlayer;
     }, [selectedPlayer]);
@@ -50,34 +51,48 @@ const PropertyTable = ({ mode, selectedPlayer, updateProperties }: PropertyTable
         setRowTotals((prev) => {
             const updatedTotals = [...prev]; // Create a copy of the previous totals
             updatedTotals[index] = total;
+
+            // Calculate the total for the property
+            const propertyTotal = updatedTotals.reduce((sum, rowTotal) => sum + rowTotal, 0);
+            if (selectedPlayer) {
+                updateProperties(selectedPlayer.id, propertyTotal);
+                setError(null); // Clear any previous error message 
+            }
             return updatedTotals;
         });
     };
 
+    // Handler for table clicks
+    const handleTableClick = () => {
+        if (!selectedPlayer) {
+            setError("No player selected!"); // Set error if no player is selected
+        } else {
+            setError(null); // Clear error if a player is selected
+        }
+    };
+
     const propertyTotal = rowTotals.reduce((sum, rowTotal) => sum + rowTotal, 0);
 
-    const onSaveHandler = () => {
-        if (selectedPlayer) {
-            updateProperties(selectedPlayer.id, propertyTotal); 
-        } else {
-            alert("No player selected!");
-        }
-    }
+
 
     // Clears the table
     const onClearHandler = () => {
-        setClearFlag(prev => !prev); 
+        setClearFlag(prev => !prev);
         setRowTotals([]);
     };
 
     return (
         <div>
-            {/* Clear button */}   
-            <div className="w-3/5 mx-auto flex gap-2 justify-end items-center mt-3">
+            {/* Display error message */}
+            {error && <p className="text-red-500 text-center mt-2">{error}</p>}
+            {/* Clear button */}
+            <div className="w-3/5 mx-auto flex gap-3 justify-end items-center mt-3">
+                <h2>Total Property:</h2>
+                <h2>{propertyTotal}</h2>
                 <button onClick={onClearHandler} className={OkButtonStyle}>Clear</button>
-            </div>  
-            {/* Table displaying property data */}       
-            <table className="border border-gray-400 border-collapse text-center mt-3 mx-auto w-3/5">
+            </div>
+            {/* Table displaying property data */}
+            <table className="border border-gray-400 border-collapse text-center mt-3 mx-auto w-3/5" onClick={handleTableClick}>
                 <thead>
                     <tr className="bg-gray-100">
                         <th className={cellStyle}>Name</th>
@@ -92,25 +107,24 @@ const PropertyTable = ({ mode, selectedPlayer, updateProperties }: PropertyTable
                 <tbody>
                     {/* Render a row for each property card */}
                     {propertyCards.map((card: PropertyCard, index) => (
-                        <PropertyTableRow 
+                        <PropertyTableRow
                             key={index}
                             mode={mode} // Current game mode
                             card={card}
                             onRowTotalChange={(total: number) => handleRowTotalChange(index, total)}
                             clearFlag={clearFlag} // Signal to clear the row
-                            />
+                        />
                     ))}
                 </tbody>
             </table>
             {/* Display total property value and save button */}
             <div className="w-3/5 mx-auto flex gap-2 justify-end items-center mt-3">
                 <div className="flex gap-2">
-                <h2>Total Property:</h2>
-                <h2>{propertyTotal}</h2>
-                </div>    
-                <button onClick={onSaveHandler} className={OkButtonStyle}>Save</button>            
+                    <h2>Total Property:</h2>
+                    <h2>{propertyTotal}</h2>
                 </div>
-            
+            </div>
+
         </div>
     );
 }

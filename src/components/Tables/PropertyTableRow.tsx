@@ -77,7 +77,7 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
         setIsHotelChecked(false);
         setIsMortgageChecked(false);
         setTotalRow(0);
-        onRowTotalChange(0); // Wichtig: Damit Parent die Änderung bekommt
+        onRowTotalChange(0);
     }, [clearFlag]);
 
     useEffect(() => {
