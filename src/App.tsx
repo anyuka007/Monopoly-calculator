@@ -140,8 +140,13 @@ const updateProperties = (playerId: string, properties: number) => {
       <div className='flex flex-col  md:flex-row w-[95%] m-auto justify-between md:justify-center items-center gap-2'>
         <div className="flex flex-wrap gap-4 justify-center">
           {players.map((player) => (
-            <Player key={player.id} name={player.name} score={player.score} deleteHandler={() => deletePlayer(player.id)} editHandler={(newName) => editPlayer(player.id, newName)} 
-            setSelectedPlayer={() => selectPlayer(player.id)} />
+            <Player 
+            key={player.id} 
+            name={player.name} 
+            score={player.score} 
+            deleteHandler={() => deletePlayer(player.id)} editHandler={(newName) => editPlayer(player.id, newName)} 
+            setSelectedPlayer={() => selectPlayer(player.id)} 
+            isSelected={selectedPlayer?.id === player.id}/>
           ))}
         </div>
 

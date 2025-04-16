@@ -1,5 +1,5 @@
 import { Pencil, Trash2, X, Check } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { /* useEffect, */ useRef, useState } from "react";
 
 const iconStyle = "text-white";
 const iconSize = 20;
@@ -10,21 +10,21 @@ export type PlayerProps = {
     deleteHandler: () => void;
     editHandler: (newName: string) => void;
     setSelectedPlayer: () => void;
+    isSelected: boolean;
 }
 
-const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer }: PlayerProps) => {
+const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer, isSelected }: PlayerProps) => {
 
     const [isEditMode, setIsEditMode] = useState(false);
     const [newName, setNewName] = useState(name);
-    const [isSelected, setIsSelected] = useState(false);
     // Ref for the Player container
     const playerRef = useRef<HTMLDivElement>(null);
 
     // Handle clicks outside the Player component
-    useEffect(() => {
+    /* useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (playerRef.current && !playerRef.current.contains(event.target as Node)) {
-                setIsSelected(false); // Deselect the player
+                //setIsSelected(false); // Deselect the player
                 setIsEditMode(false);
             }
         };
@@ -33,27 +33,22 @@ const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer }: 
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, []);
+    }, []); */
 
 
     const onEdit = () => {
         setIsEditMode(true);
-        setIsSelected(true);
-        console.log(`Player ${name} is in edit mode`);     
+        setSelectedPlayer();;     
     }
 
     const onSave = () => {
         editHandler(newName);
         setIsEditMode(false);
-        setIsSelected(false);
-        console.log(`Player ${name} is saved`);
     }
 
     const onCancel = () => {
         setNewName(name);
-        setIsEditMode(false);  
-        setIsSelected(false);      
-        console.log(`Player ${name} is cancelled`);
+        setIsEditMode(false);
     }
 
     return (
@@ -91,7 +86,7 @@ const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer }: 
                     </div>
                 )}
             </div>
-            <div className="bg-yellow-500 w-full h-[50%] flex justify-center items-center rounded-b-lg" onDoubleClick={() => {setSelectedPlayer() ; setIsSelected(!isSelected)}}>
+            <div className="bg-yellow-500 w-full h-[50%] flex justify-center items-center rounded-b-lg" onDoubleClick={() => {setSelectedPlayer()}}>
                 <p className="text-2xl text-white">{score.total}</p>
             </div>
         </div>
