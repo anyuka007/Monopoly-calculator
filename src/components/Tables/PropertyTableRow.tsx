@@ -60,7 +60,7 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
     };
 
     const handleHousesCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setIsCardChecked(true); 
+        setIsCardChecked(true);
         setHousesChecked(Number(e.target.value))
         if (Number(e.target.value) === 4) {
             setIsHotelChecked(true); // Set hotel to true when 4 houses are selected
@@ -98,6 +98,12 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
 
     }, [isCardChecked, housesChecked, isHotelChecked, isMortgageChecked, card.price, card.houseCost]);
 
+    const checkboxStyle = (color: string) => {
+        return `w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  peer-checked:bg-${color}-500 peer-checked:text-white transition-all duration-200
+        before:content-[''] peer-checked:before:content-['✓'] before:text-lg 
+        hover:scale-110 hover:border-${color}-500 hover:border-3`
+    }
+
     return (
         <tr>
             {/* Property Name and Price */}
@@ -111,7 +117,7 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
                 <div >{card.houseCost}</div>
             </td>
 
-            {/* Is card purchased */ }
+            {/* Is card purchased */}
             <td className={cellStyle}>
                 <div className="flex justify-center">
                     <input
@@ -123,8 +129,7 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
                     />
                     <label
                         htmlFor={`checkbox1-${nameJoined}`}
-                        className="w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  peer-checked:bg-lime-500 peer-checked:text-white transition-all duration-200
-             before:content-[''] peer-checked:before:content-['✓'] before:text-lg hover:scale-110 hover:border-lime-500 hover:border-3 "
+                        className={checkboxStyle("lime")}
                     >
                         <span className="hidden peer-checked:inline-block">✓</span>
                     </label>
@@ -145,7 +150,7 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
                                 defaultChecked={val === 0}
                                 checked={housesChecked === val}
                                 onChange={handleHousesCheck}
-                                /* disabled={!isCardChecked} */
+                            /* disabled={!isCardChecked} */
                             />
                             <label
                                 htmlFor={`houses${val}-${nameJoined}`}
@@ -168,12 +173,11 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
                         className="hidden peer"
                         checked={isHotelChecked}
                         onChange={handleHotelCheck}
-                        /* disabled={!isCardChecked || housesChecked < 4} */
+                    /* disabled={!isCardChecked || housesChecked < 4} */
                     />
                     <label
                         htmlFor={`checkbox2-${nameJoined}`}
-                        className="w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center peer-checked:bg-green-500 peer-checked:text-white transition-all duration-200
-             before:content-[''] peer-checked:before:content-['✓'] before:text-lg hover:scale-110 hover:border-green-500 hover:border-3 "
+                        className={checkboxStyle("green")}
                     >
                     </label>
                 </div>
@@ -189,12 +193,11 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
                         className="hidden peer"
                         checked={isMortgageChecked}
                         onChange={handleMortgageCheck}
-                        /* disabled={!isCardChecked} */
+                    /* disabled={!isCardChecked} */
                     />
                     <label
                         htmlFor={`checkbox3-${nameJoined}`}
-                        className="w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  peer-checked:bg-lime-500 peer-checked:text-white transition-all duration-200
-             before:content-[''] peer-checked:before:content-['✓'] before:text-lg hover:scale-110 hover:border-lime-500 hover:border-3 "
+                        className={checkboxStyle("lime")}
                     >
                         <span className="hidden peer-checked:inline-block">✓</span>
                     </label>
