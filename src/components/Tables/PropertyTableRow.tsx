@@ -65,6 +65,9 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
         if (Number(e.target.value) === 4) {
             setIsHotelChecked(true); // Set hotel to true when 4 houses are selected
         }
+        if (Number(e.target.value) < 4 && isHotelChecked) {
+            setIsHotelChecked(false); // Set hotel to false when less than 4 houses are selected
+        }
     }
 
     const handleHotelCheck = () => {
