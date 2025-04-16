@@ -128,9 +128,9 @@ const updateProperties = (playerId: string, properties: number) => {
 };
 
   const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
-    `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 ${mode === buttonMode
-      ? "bg-blue-500 text-white shadow-md"
-      : "bg-gray-200 text-black hover:bg-gray-300"
+    `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 shadow-md text-white hover:scale-110 ${mode === buttonMode
+      ? "bg-blue-500 hover:bg-blue-600"
+      : "bg-yellow-500 hover:bg-yellow-600"
     }`;
 
 
