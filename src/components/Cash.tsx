@@ -10,36 +10,53 @@ export const OkButtonStyle = "w-16 border p-2 rounded-lg text-center cursor-poin
 
 const Cash = ({ selectedPlayer, updateCash }: CashProps) => {
     const [amount, setAmount] = useState<number>(selectedPlayer ? selectedPlayer.score.cash : 0);
+    const [error, setError] = useState<string>("");
 
     useEffect(() => {
         if (selectedPlayer) {
-          setAmount(selectedPlayer.score.cash); 
+            setAmount(selectedPlayer.score.cash);
         } else {
-          setAmount(0); 
+            setAmount(0);
         }
-      }, [selectedPlayer]);
-    
-    
+    }, [selectedPlayer]);
+
+
     const handleCashChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAmount(Number(e.target.value));
     }
-    const handleOkClick = () => {
+    const handleSave = () => {
         if (selectedPlayer) {
             updateCash(selectedPlayer.id, amount);
         } else {
-            alert("No player selected");
+            setError("No player selected");
         }
     }
 
-return (
-    <div className='flex justify-start items-center gap-4 w-3/5 mx-auto mt-7'>
-        <p>Cash</p>
-        <input className="border p-2 rounded-lg" type="number" 
-        onChange={handleCashChange} 
-        value={amount === 0 ? "" : amount}/>
-        <button className={OkButtonStyle} onClick={handleOkClick}>Ok</button>
-    </div>
-);
-}
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter" && selectedPlayer) {
+            handleSave(); 
+        }
+        if (e.key === "Enter" && !selectedPlayer) {
+            setError("No player selected"); 
+        }
+    };
 
-export default Cash;
+
+        return (
+            <div>
+            <div className='flex justify-start items-center gap-4 w-3/5 mx-auto mt-7'>
+                <p>Cash</p>
+                <input className="border p-2 rounded-lg" type="number"
+                    onChange={handleCashChange}
+                    value={amount === 0 ? "" : amount}
+                    onBlur={handleSave}
+                    onKeyDown={handleKeyDown} />
+            </div>
+            <div className='flex justify-start items-center w-3/5 mx-auto mt-1'>
+            {error && !selectedPlayer && <p className="text-red-500">{error}</p>}
+            </div>
+            </div>
+        );
+    }
+
+    export default Cash;
