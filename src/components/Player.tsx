@@ -55,7 +55,8 @@ const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer, is
         <div 
         ref={playerRef} // Attach the ref to the Player container
         className={`player flex flex-col justify-center items-center m-2 rounded-lg w-[300px] md:w-[250px] h-[100px] bg-[#eeeded] ${isSelected 
-        ? "shadow-[inset 12px_12px_24px_#777777,inset -12px_-12px_24px_#ffffff] scale-115 border-4 border-blue-500" : "shadow-[12px_12px_24px_#777777,-12px_-12px_24px_#ffffff] "}`} >
+        ? "shadow-[inset 12px_12px_24px_#777777,inset -12px_-12px_24px_#ffffff] scale-115 border-4 border-blue-500" : "shadow-[12px_12px_24px_#777777,-12px_-12px_24px_#ffffff] "}`} 
+        onClick={() => {setSelectedPlayer()}}>
             <div onDoubleClick={onEdit} className="bg-blue-500 h-[50%] w-full flex justify-between items-center p-2 rounded-t-lg">
                 {!isEditMode ? (
                     <p className="truncate w-[80%] text-white">{name}</p>
@@ -87,7 +88,7 @@ const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer, is
                     </div>
                 )}
             </div>
-            <div className="bg-yellow-500 w-full h-[50%] flex justify-center items-center rounded-b-lg" onDoubleClick={() => {setSelectedPlayer()}}>
+            <div className="bg-yellow-500 w-full h-[50%] flex justify-center items-center rounded-b-lg">
                 <p className="text-2xl text-white">{score.total}</p>
             </div>
         </div>

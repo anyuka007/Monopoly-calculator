@@ -192,8 +192,11 @@ function App() {
           <button className='h-10 p-2 bg-blue-500 rounded-lg shadow-[4px_4px_8px_#777777,-4px_-4px_8px_#ffffff]' onClick={addPlayer}><UserRoundPlus color='white' /></button>
         </div>
       </div>
+<div className='flex justify-center mt-5'> <p>Select a player</p></div>
+     
 
       {selectedPlayer && (
+        <>
         <div className="mt-4 text-center">
           <h2 className="text-xl font-bold">Selected Player:</h2>
           <p className="text-lg">{selectedPlayer.name}</p>
@@ -208,11 +211,11 @@ function App() {
     <li>owned: {property.owned ? "Yes" : "No"}</li>
     <li>houses: {property.houses}</li>
     <li>hotel: {property.hotel ? "Yes" : "No"}</li>
-    <li>mortgaged: {property.mortgaged ? "Yes" : "No"}</li></ul>
+    <li>mortgaged: {property.mortgaged }</li></ul>
   </div>
 ))}
         </div>
-      )}
+      
 
       <Cash selectedPlayer={selectedPlayer} updateCash={updateCash} />
 
@@ -230,6 +233,8 @@ function App() {
       <div>
         <RailroadsTable />
       </div>
+      </>
+      )}
     </>
   )
 }
