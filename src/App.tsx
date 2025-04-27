@@ -46,8 +46,6 @@ function App() {
     console.log(`Player ${newPlayer.name} is added`);
   }
 
-  //console.log("selectedPlayer", selectedPlayer);
-
   const deletePlayer = (id: string) => {
     const updatedPlayers = players.filter((player) => player.id !== id);
     setPlayers(updatedPlayers);
@@ -121,6 +119,7 @@ function App() {
         };
       }
       return player;
+      
     });
     setPlayers(updatedPlayers);
 
@@ -206,10 +205,10 @@ function App() {
           {selectedPlayer.properties.map((property, index) => (
   <div key={index}>
     <ul>Name: {property.name}
-    <li>owned: {property.owned}</li>
+    <li>owned: {property.owned ? "Yes" : "No"}</li>
     <li>houses: {property.houses}</li>
-    <li>hotel: {property.hotel}</li>
-    <li>mortgaged: {property.mortgaged}</li></ul>
+    <li>hotel: {property.hotel ? "Yes" : "No"}</li>
+    <li>mortgaged: {property.mortgaged ? "Yes" : "No"}</li></ul>
   </div>
 ))}
         </div>

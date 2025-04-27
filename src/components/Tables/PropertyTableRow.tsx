@@ -81,20 +81,21 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag, 
     };
 
     const handleHousesCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newHousesChecked = Number(e.target.value);
         setIsCardChecked(true);
-        setHousesChecked(Number(e.target.value))
-        if (Number(e.target.value) === 4) {
+        setHousesChecked(newHousesChecked)
+        if (newHousesChecked === 4) {
             setIsHotelChecked(true); // Set hotel to true when 4 houses are selected
         }
-        if (Number(e.target.value) < 4 && isHotelChecked) {
+        if (newHousesChecked < 4 && isHotelChecked) {
             setIsHotelChecked(false); // Set hotel to false when less than 4 houses are selected
         }
         if(selectedPlayer) {
             const updatedProperty: PropertyState = {
                 name: card.name[mode],
                 owned: isCardChecked,
-                houses: housesChecked,
-                hotel: isHotelChecked,
+                houses: newHousesChecked,
+                hotel: newHousesChecked === 4 ? true : isHotelChecked,
                 mortgaged: isMortgageChecked,
             };
     
@@ -113,11 +114,48 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag, 
         setIsCardChecked(true);
         setIsHotelChecked(!isHotelChecked);
         setHousesChecked(4); // Set houses to 4 when hotel is checked
+
+        if (selectedPlayer) {
+            const updatedProperty: PropertyState = {
+                name: card.name[mode],
+                owned: isCardChecked,
+                houses: 4,
+                hotel: !isHotelChecked,
+                mortgaged: isMortgageChecked,
+            };
+    
+            const updatedProperties = selectedPlayer.properties.map((p) =>
+                p.name === card.name[mode] ? updatedProperty : p
+            );
+    
+            updateCheckedProperties(selectedPlayer.id, updatedProperties);
+        } else {
+            console.error("No player selected!");
+        }
+
     };
 
     const handleMortgageCheck = () => {
         setIsCardChecked(true);
         setIsMortgageChecked(!isMortgageChecked);
+
+        if (selectedPlayer) {
+            const updatedProperty: PropertyState = {
+                name: card.name[mode],
+                owned: isCardChecked,
+                houses: housesChecked,
+                hotel: isHotelChecked,
+                mortgaged: !isMortgageChecked,
+            };
+    
+            const updatedProperties = selectedPlayer.properties.map((p) =>
+                p.name === card.name[mode] ? updatedProperty : p
+            );
+    
+            updateCheckedProperties(selectedPlayer.id, updatedProperties);
+        } else {
+            console.error("No player selected!");
+        }   
     };
 
     useEffect(() => {
