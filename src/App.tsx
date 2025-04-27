@@ -211,7 +211,7 @@ function App() {
     <li>owned: {property.owned ? "Yes" : "No"}</li>
     <li>houses: {property.houses}</li>
     <li>hotel: {property.hotel ? "Yes" : "No"}</li>
-    <li>mortgaged: {property.mortgaged }</li></ul>
+    <li>mortgaged: {property.mortgaged ? "Yes" : "No"}</li></ul>
   </div>
 ))}
         </div>
