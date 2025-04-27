@@ -19,9 +19,6 @@ type PropertyTableRowProps = {
     onRowTotalChange: (total: number) => void;
 };
 
-const labelStyle =
-    "w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center peer-checked:bg-blue-500 peer-checked:text-white hover:scale-110 hover:border-blue-500 hover:border-3 ";
-
 const colors: { [key: string]: string } = {
     brown: "bg-[#A13C33]",
     sky: "bg-[#C3CED8]",
@@ -102,9 +99,14 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
     }, [isCardChecked, housesChecked, isHotelChecked, isMortgageChecked, card.price, card.houseCost]);
 
     const checkboxStyle = (color: string) => {
-        return `w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  peer-checked:bg-${color}-500 peer-checked:text-white transition-all duration-200
-        before:content-[''] peer-checked:before:content-['✓'] before:text-lg 
-        hover:scale-110 hover:border-${color}-500 hover:border-3`
+        const colorClasses: { [key: string]: string } = {
+            green: "peer-checked:bg-green-500 hover:border-green-500 before:content-[''] peer-checked:before:content-['✓']",
+            lime: "peer-checked:bg-lime-500 hover:border-lime-500 before:content-[''] peer-checked:before:content-['✓']",
+            blue: "peer-checked:bg-blue-500 hover:border-blue-500",
+        };
+        return `w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  peer-checked:text-white transition-all duration-200
+        before:text-lg 
+        hover:scale-110 ${colorClasses[color] || ""} hover:border-3`
     }
 
     return (
@@ -157,7 +159,7 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
                             />
                             <label
                                 htmlFor={`houses${val}-${nameJoined}`}
-                                className={labelStyle}
+                                className={checkboxStyle("blue")}
                             >
                                 {/* {val === 0 ? "-" : val} */}
                                 {val}

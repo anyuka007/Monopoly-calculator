@@ -6,7 +6,7 @@ import { generateId } from './utils/generateId';
 import { generateRandomName } from './utils/generateName';
 import PropertyTable from './components/Tables/PropertyTable';
 import Cash from './components/Cash';
-import RailroadsTable from './components/Tables/RailRoadsTable';
+import RailroadsTable from './components/Tables/RailroadsTable.tsx';
 
 export type Player = {
   name: string;
