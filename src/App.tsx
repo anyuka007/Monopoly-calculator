@@ -10,11 +10,19 @@ import RailroadsTable from './components/Tables/RailroadsTable.tsx';
 
 export type Player = {
   name: string;
-  score: {cash: number, properties: number, railroads: number, utilities: number, total: number};
+  score: { cash: number, properties: number, railroads: number, utilities: number, total: number };
   id: string;
-}
+  properties: PropertyState[];}
 
 type PlayersState = Player[];
+
+export type PropertyState = {
+  name: string;
+  owned: boolean;
+  houses: number;
+  hotel: boolean;
+  mortgaged: boolean;
+}
 
 function App() {
   const idPlayer1: string = generateId();
@@ -22,8 +30,8 @@ function App() {
   const namePlayer1: string = generateRandomName();
   const namePlayer2: string = generateRandomName();
   const [players, setPlayers] = useState<PlayersState>([
-    { id: idPlayer1, name: namePlayer1, score: {cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0} },
-    { id: idPlayer2, name: namePlayer2, score: {cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0} },
+    { id: idPlayer1, name: namePlayer1, score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [] },
+    { id: idPlayer2, name: namePlayer2, score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [] },
   ]);
   const [mode, setMode] = useState<'classic' | 'wunderland'>('wunderland');
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
@@ -33,15 +41,17 @@ function App() {
       alert('Cannot add more than 6 players');
       return;
     }
-    const newPlayer: Player = { id: generateId(), name: generateRandomName(), score: {cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0} };
+    const newPlayer: Player = { id: generateId(), name: generateRandomName(), score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [] };
     setPlayers([...players, newPlayer]);
     console.log(`Player ${newPlayer.name} is added`);
   }
 
+  //console.log("selectedPlayer", selectedPlayer);
+
   const deletePlayer = (id: string) => {
     const updatedPlayers = players.filter((player) => player.id !== id);
     setPlayers(updatedPlayers);
-    setSelectedPlayer(null); 
+    setSelectedPlayer(null);
     console.log(`Player is deleted`);
   };
 
@@ -56,76 +66,96 @@ function App() {
 
     if (selectedPlayer?.id === id) {
       setSelectedPlayer({
-          ...selectedPlayer,
-          name: newName,
+        ...selectedPlayer,
+        name: newName,
       });
-  }
+    }
 
     console.log(`Player is edited`);
   };
 
   const selectPlayer = (id: string) => {
-  const selPlayer = players.find((player) => player.id === id) || null;
-  setSelectedPlayer(selPlayer);
-};
+    const selPlayer = players.find((player) => player.id === id) || null;
+    setSelectedPlayer(selPlayer);
+  };
 
-const updateCash = (id: string, cash: number) => {
-  const updatedPlayers = players.map((player) => {  
-    if (player.id === id) {
-      const updatedScore = {
-        ...player.score,
-        cash: cash,
-        total: cash + player.score.properties + player.score.railroads + player.score.utilities, // Berechne total neu
-      };
-      return { ...player, score: updatedScore };
-    }
-    return player;
-  }
-  );
-  setPlayers(updatedPlayers);
-
-  if (selectedPlayer?.id === id) {
-    setSelectedPlayer({
-      ...selectedPlayer,
-      score: {
-        ...selectedPlayer.score,
-        cash: cash,
-        total: cash + selectedPlayer.score.properties + selectedPlayer.score.railroads + selectedPlayer.score.utilities,
-      },
-    });
-  }
-  console.log(`Player ${id} cash is updated`);
-
-}
-
-const updateProperties = (playerId: string, properties: number) => {
-  const updatedPlayers = players.map((player) => {
-    if (player.id === playerId) {
-      return {
-        ...player,
-        score: {
+  const updateCash = (id: string, cash: number) => {
+    const updatedPlayers = players.map((player) => {
+      if (player.id === id) {
+        const updatedScore = {
           ...player.score,
-          properties: properties,
-          total: player.score.cash + properties + player.score.railroads + player.score.utilities, // Aktualisiere total
-        },
-      };
+          cash: cash,
+          total: cash + player.score.properties + player.score.railroads + player.score.utilities, // Berechne total neu
+        };
+        return { ...player, score: updatedScore };
+      }
+      return player;
     }
-    return player;
-  });
-  setPlayers(updatedPlayers);
+    );
+    setPlayers(updatedPlayers);
 
-  if (selectedPlayer?.id === playerId) {
-    setSelectedPlayer({
-      ...selectedPlayer,
-      score: {
-        ...selectedPlayer.score,
-        properties: properties,
-        total: selectedPlayer.score.cash + properties + selectedPlayer.score.railroads + selectedPlayer.score.utilities,
-      },
-    });
+    if (selectedPlayer?.id === id) {
+      setSelectedPlayer({
+        ...selectedPlayer,
+        score: {
+          ...selectedPlayer.score,
+          cash: cash,
+          total: cash + selectedPlayer.score.properties + selectedPlayer.score.railroads + selectedPlayer.score.utilities,
+        },
+      });
+    }
+    console.log(`Player ${id} cash is updated`);
+
   }
-  console.log(`Player ${playerId} properties updated to ${properties}`);
-};
+
+  const updateProperties = (playerId: string, properties: number) => {
+    const updatedPlayers = players.map((player) => {
+      if (player.id === playerId) {
+        return {
+          ...player,
+          score: {
+            ...player.score,
+            properties: properties,
+            total: player.score.cash + properties + player.score.railroads + player.score.utilities, // Aktualisiere total
+          },
+        };
+      }
+      return player;
+    });
+    setPlayers(updatedPlayers);
+
+    if (selectedPlayer?.id === playerId) {
+      setSelectedPlayer({
+        ...selectedPlayer,
+        score: {
+          ...selectedPlayer.score,
+          properties: properties,
+          total: selectedPlayer.score.cash + properties + selectedPlayer.score.railroads + selectedPlayer.score.utilities,
+        },
+      });
+    }
+  };
+
+
+  const updateCheckedProperties = (playerId: string, properties: PropertyState[]) => {
+    const updatedPlayers = players.map((player) => {
+      if (player.id === playerId) {
+        return {
+          ...player,
+          properties: properties,
+        };
+      }
+      return player;
+    });
+    setPlayers(updatedPlayers);
+
+    if (selectedPlayer?.id === playerId) {
+      setSelectedPlayer({
+        ...selectedPlayer,
+        properties: properties,
+      });
+    }
+  }
 
   const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
     `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 shadow-md text-white hover:scale-110 ${mode === buttonMode
@@ -149,13 +179,13 @@ const updateProperties = (playerId: string, properties: number) => {
       <div className='flex flex-col  md:flex-row w-[95%] m-auto justify-between md:justify-center items-center gap-5'>
         <div className="flex flex-wrap gap-4 justify-center">
           {players.map((player) => (
-            <Player 
-            key={player.id} 
-            name={player.name} 
-            score={player.score} 
-            deleteHandler={() => deletePlayer(player.id)} editHandler={(newName) => editPlayer(player.id, newName)} 
-            setSelectedPlayer={() => selectPlayer(player.id)} 
-            isSelected={selectedPlayer?.id === player.id}/>
+            <Player
+              key={player.id}
+              name={player.name}
+              score={player.score}
+              deleteHandler={() => deletePlayer(player.id)} editHandler={(newName) => editPlayer(player.id, newName)}
+              setSelectedPlayer={() => selectPlayer(player.id)}
+              isSelected={selectedPlayer?.id === player.id} />
           ))}
         </div>
 
@@ -173,23 +203,33 @@ const updateProperties = (playerId: string, properties: number) => {
           <p className="text-sm text-gray-500">Railroads: {selectedPlayer.score.railroads}</p>
           <p className="text-sm text-gray-500">Utilities: {selectedPlayer.score.utilities}</p>
           <p className="text-sm text-gray-500">Total: {selectedPlayer.score.total}</p>
+          {selectedPlayer.properties.map((property, index) => (
+  <div key={index}>
+    <ul>Name: {property.name}
+    <li>owned: {property.owned}</li>
+    <li>houses: {property.houses}</li>
+    <li>hotel: {property.hotel}</li>
+    <li>mortgaged: {property.mortgaged}</li></ul>
+  </div>
+))}
         </div>
       )}
 
-      <Cash selectedPlayer={selectedPlayer} updateCash={updateCash}/>
+      <Cash selectedPlayer={selectedPlayer} updateCash={updateCash} />
 
       <div className="flex w-3/5 mx-auto gap-2 justify-end items-center m-5">
         <div className={modeButtonStyle("classic")} onClick={() => modeHandler("classic")}>Classic</div>
         <div className={modeButtonStyle("wunderland")} onClick={() => modeHandler("wunderland")}>Wunderland</div>
       </div>
       <div>
-        <PropertyTable 
-        mode={mode}
-        selectedPlayer= {selectedPlayer}
-        updateProperties={updateProperties} />
+        <PropertyTable
+          mode={mode}
+          selectedPlayer={selectedPlayer}
+          updateProperties={updateProperties}
+          updateCheckedProperties = {updateCheckedProperties} />
       </div>
       <div>
-        <RailroadsTable />  
+        <RailroadsTable />
       </div>
     </>
   )

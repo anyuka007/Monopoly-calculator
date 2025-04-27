@@ -1,7 +1,7 @@
 import PropertyTableRow from "./PropertyTableRow";
 import { propertyCards } from "../../variables/cardsInfo";
 import { useEffect, useRef, useState } from "react";
-import { Player } from "../../App";
+import { Player, PropertyState } from "../../App";
 import { OkButtonStyle } from "../Cash";
 
 export const cellStyle = "border border-gray-400 p-2 text-center";
@@ -23,9 +23,10 @@ type PropertyTableProps = {
     mode: Mode;
     selectedPlayer: Player | null;
     updateProperties: (playerId: string, properties: number) => void;
+    updateCheckedProperties: (playerId: string, properties: PropertyState[]) => void;
 }
 
-const PropertyTable = ({ mode, selectedPlayer, updateProperties }: PropertyTableProps) => {
+const PropertyTable = ({ mode, selectedPlayer, updateProperties, updateCheckedProperties }: PropertyTableProps) => {
     const [rowTotals, setRowTotals] = useState<number[]>([]);
     const [clearFlag, setClearFlag] = useState(false); // to trigger a reset of all rows in the table
     const [error, setError] = useState<string | null>(null); // to display error messages
@@ -114,6 +115,8 @@ const PropertyTable = ({ mode, selectedPlayer, updateProperties }: PropertyTable
                             card={card}
                             onRowTotalChange={(total: number) => handleRowTotalChange(index, total)}
                             clearFlag={clearFlag} // Signal to clear the row
+                            selectedPlayer={selectedPlayer} // Current selected player
+                            updateCheckedProperties={updateCheckedProperties} // Function to update checked properties
                         />
                     ))}
                 </tbody>

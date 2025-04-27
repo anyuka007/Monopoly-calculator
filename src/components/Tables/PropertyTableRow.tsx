@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { cellStyle, Mode } from "./PropertyTable";
+import { Player, PropertyState } from "../../App";
 
 type PropertyTableRowProps = {
     mode: Mode;
@@ -17,6 +18,8 @@ type PropertyTableRowProps = {
     clearFlag: boolean; // Flag identifies that number of houses and hotels is 0
     // Function to handle the total change for this row
     onRowTotalChange: (total: number) => void;
+    selectedPlayer: Player | null;
+    updateCheckedProperties: (playerId: string, properties: PropertyState[]) => void;
 };
 
 const colors: { [key: string]: string } = {
@@ -31,7 +34,7 @@ const colors: { [key: string]: string } = {
 
 };
 
-const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }: PropertyTableRowProps) => {
+const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag, selectedPlayer, updateCheckedProperties }: PropertyTableRowProps) => {
     const [totalRow, setTotalRow] = useState(0);
     const [isCardChecked, setIsCardChecked] = useState(false);
     const [housesChecked, setHousesChecked] = useState(0);
@@ -54,6 +57,27 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
             setIsHotelChecked(false);
             setIsMortgageChecked(false);
         }
+
+        // Update the checked properties in the parent component
+
+        if (selectedPlayer) {
+            const updatedProperty: PropertyState = {
+                name: card.name[mode],
+                owned: newCardCheckedState,
+                houses: newCardCheckedState ? housesChecked : 0,
+                hotel: newCardCheckedState ? isHotelChecked : false,
+                mortgaged: newCardCheckedState ? isMortgageChecked : false,
+            };
+    
+            const updatedProperties = newCardCheckedState
+                ? [...selectedPlayer.properties, updatedProperty] // Füge die Eigenschaft hinzu
+                : selectedPlayer.properties.filter((p) => p.name !== card.name[mode]); // Entferne die Eigenschaft
+    
+            updateCheckedProperties(selectedPlayer.id, updatedProperties);
+        } else {
+            console.error("No player selected!");
+        }
+        
     };
 
     const handleHousesCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +88,24 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
         }
         if (Number(e.target.value) < 4 && isHotelChecked) {
             setIsHotelChecked(false); // Set hotel to false when less than 4 houses are selected
+        }
+        if(selectedPlayer) {
+            const updatedProperty: PropertyState = {
+                name: card.name[mode],
+                owned: isCardChecked,
+                houses: housesChecked,
+                hotel: isHotelChecked,
+                mortgaged: isMortgageChecked,
+            };
+    
+            const updatedProperties = selectedPlayer.properties.map((p) =>
+                p.name === card.name[mode] ? updatedProperty : p
+            );
+    
+            updateCheckedProperties(selectedPlayer.id, updatedProperties);
+        }
+        else {
+            console.error("No player selected!");
         }
     }
 
@@ -152,7 +194,6 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
                                 name={`houses-${nameJoined}`}
                                 value={val}
                                 className="hidden peer"
-                                defaultChecked={val === 0}
                                 checked={housesChecked === val}
                                 onChange={handleHousesCheck}
                             /* disabled={!isCardChecked} */
