@@ -90,7 +90,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
     const handleHousesCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!selectedPlayer) return;
 
-        const newHousesChecked = Number(e.target.value); // Get the selected number of houses
+        const housesChecked = Number(e.target.value); // Get the selected number of houses
         const propertyName = card.name[mode]; // Get the property name based on the current mode
 
         const updatedPlayers = players.map((player) => {
@@ -105,10 +105,10 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                         ? {
                             ...property,
                             owned: true,
-                            houses: newHousesChecked,
-                            hotel: newHousesChecked === 4, // If 4 houses, mark as hotel
+                            houses: housesChecked,
+                            hotel: housesChecked === 4,
                             mortgaged: false, // Ensure the property is not mortgaged
-                            total: card.price + card.houseCost * newHousesChecked, // Calculate total
+                            total: card.price + card.houseCost * housesChecked, // Calculate total
                         }
                         : property // Keep other properties unchanged
                 )
@@ -117,10 +117,10 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                     {
                         name: propertyName,
                         owned: true,
-                        houses: newHousesChecked,
-                        hotel: newHousesChecked === 4,
+                        houses: housesChecked,
+                        hotel: housesChecked === 4, // Hotel means 4 houses
                         mortgaged: false,
-                        total: card.price + card.houseCost * newHousesChecked,
+                        total: card.price + card.houseCost * housesChecked,
                     },
                 ];
 
