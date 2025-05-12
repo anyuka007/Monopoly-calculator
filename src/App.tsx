@@ -12,7 +12,8 @@ export type Player = {
   name: string;
   score: { cash: number, properties: number, railroads: number, utilities: number, total: number };
   id: string;
-  properties: PropertyState[];}
+  properties: PropertyState[];
+}
 
 export type PlayersState = Player[];
 
@@ -22,6 +23,7 @@ export type PropertyState = {
   houses: number;
   hotel: boolean;
   mortgaged: boolean;
+  total: number;
 }
 
 const initialPlayersData: PlayersState = [
@@ -29,7 +31,7 @@ const initialPlayersData: PlayersState = [
   { id: generateId(), name: generateRandomName(), score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [] },
 ];
 
-function App() {  
+function App() {
   const [players, setPlayers] = useState<PlayersState>(
     initialPlayersData);
   const [mode, setMode] = useState<'classic' | 'wunderland'>('wunderland');
@@ -66,11 +68,7 @@ function App() {
     setPlayers(updatedPlayers);
 
     if (selectedPlayer === id) {
-      setSelectedPlayer(/* {
-        ...selectedPlayer,
-        name: newName,
-      } */
-     id);
+      setSelectedPlayer(id);
     }
 
     console.log(`Player is edited`);
@@ -98,41 +96,13 @@ function App() {
 
     if (selectedPlayer === id) {
       const updatedSelectedPlayer = updatedPlayers.find((player) => player.id === id);
-    if (updatedSelectedPlayer) {
-      setSelectedPlayer(updatedSelectedPlayer.id); // Nur die ID speichern
-    }
+      if (updatedSelectedPlayer) {
+        setSelectedPlayer(updatedSelectedPlayer.id); // Nur die ID speichern
+      }
     }
     console.log(`Player ${id} cash is updated`);
 
   }
-
-  const updateProperties = (playerId: string, properties: number) => {
-    const updatedPlayers = players.map((player) => {
-      if (player.id === playerId) {
-        return {
-          ...player,
-          score: {
-            ...player.score,
-            properties: properties,
-            total: player.score.cash + properties + player.score.railroads + player.score.utilities, // Aktualisiere total
-          },
-        };
-      }
-      return player;
-      
-    });
-    setPlayers(updatedPlayers);
-
-    if (selectedPlayer === playerId) {      
-        const updatedSelectedPlayer = updatedPlayers.find((player) => player.id === playerId);
-      if (updatedSelectedPlayer) {
-        setSelectedPlayer(updatedSelectedPlayer.id); // Nur die ID speichern
-      }
-      }
-  };
-
-  
- 
   const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
     `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 shadow-md text-white hover:scale-110 ${mode === buttonMode
       ? "bg-blue-500 hover:bg-blue-600"
@@ -161,7 +131,7 @@ function App() {
               key={player.id}
               name={player.name}
               score={player.score}
-              deleteHandler={() => deletePlayer(player.id)} 
+              deleteHandler={() => deletePlayer(player.id)}
               editHandler={(newName) => editPlayer(player.id, newName)}
               setSelectedPlayer={() => selectPlayer(player.id)}
               isSelected={selectedPlayer === player.id} />
@@ -172,50 +142,48 @@ function App() {
           <button className='h-10 p-2 bg-blue-500 rounded-lg shadow-[4px_4px_8px_#777777,-4px_-4px_8px_#ffffff]' onClick={addPlayer}><UserRoundPlus color='white' /></button>
         </div>
       </div>
-<div className='flex justify-center mt-5'> <p>Select a player</p></div>
-     
+      <div className='flex justify-center mt-5'> <p>Select a player</p></div>
+
 
       {selectedPlayer && (
         <>
-        <div className="mt-4 text-center">
-          <h2 className="text-xl font-bold">Selected Player:</h2>
-          <p className="text-lg">{currentPlayer.name}</p>
-          <p className="text-sm text-gray-500">Cash: {currentPlayer.score.cash}</p>
-          <p className="text-sm text-gray-500">Property: {currentPlayer.score.properties}</p>
-          <p className="text-sm text-gray-500">Railroads: {currentPlayer.score.railroads}</p>
-          <p className="text-sm text-gray-500">Utilities: {currentPlayer.score.utilities}</p>
-          <p className="text-sm text-gray-500">Total: {currentPlayer.score.total}</p>
-          {currentPlayer.properties.map((property, index) => (
-  <div key={index}>
-    <ul>Name: {property.name}
-    <li>owned: {property.owned ? "Yes" : "No"}</li>
-    <li>houses: {property.houses}</li>
-    <li>hotel: {property.hotel ? "Yes" : "No"}</li>
-    <li>mortgaged: {property.mortgaged ? "Yes" : "No"}</li></ul>
-  </div>
-))}
-        </div>
-      
+          <div className="mt-4 text-center">
+            <h2 className="text-xl font-bold">Selected Player:</h2>
+            <p className="text-lg">{currentPlayer.name}</p>
+            <p className="text-sm text-gray-500">Cash: {currentPlayer.score.cash}</p>
+            <p className="text-sm text-gray-500">Property: {currentPlayer.score.properties}</p>
+            <p className="text-sm text-gray-500">Railroads: {currentPlayer.score.railroads}</p>
+            <p className="text-sm text-gray-500">Utilities: {currentPlayer.score.utilities}</p>
+            <p className="text-sm text-gray-500">Total: {currentPlayer.score.total}</p>
+            {currentPlayer.properties.map((property, index) => (
+              <div key={index}>
+                <ul>Name: {property.name}
+                  <li>owned: {property.owned ? "Yes" : "No"}</li>
+                  <li>houses: {property.houses}</li>
+                  <li>hotel: {property.hotel ? "Yes" : "No"}</li>
+                  <li>mortgaged: {property.mortgaged ? "Yes" : "No"}</li></ul>
+              </div>
+            ))}
+          </div>
 
-      <Cash selectedPlayer={currentPlayer} updateCash={updateCash} />
 
-      <div className="flex w-3/5 mx-auto gap-2 justify-end items-center m-5">
-        <div className={modeButtonStyle("classic")} onClick={() => modeHandler("classic")}>Classic</div>
-        <div className={modeButtonStyle("wunderland")} onClick={() => modeHandler("wunderland")}>Wunderland</div>
-      </div>
-      <div>
-        <PropertyTable
-          mode={mode}
-          selectedPlayer={currentPlayer}
-          players={players}
-          setPlayers={setPlayers}
-          updateProperties={updateProperties}
-          /* updateCheckedProperties = {updateCheckedProperties} */ />
-      </div>
-      <div>
-        <RailroadsTable />
-      </div>
-      </>
+          <Cash selectedPlayer={currentPlayer} updateCash={updateCash} />
+
+          <div className="flex w-3/5 mx-auto gap-2 justify-end items-center m-5">
+            <div className={modeButtonStyle("classic")} onClick={() => modeHandler("classic")}>Classic</div>
+            <div className={modeButtonStyle("wunderland")} onClick={() => modeHandler("wunderland")}>Wunderland</div>
+          </div>
+          <div>
+            <PropertyTable
+              mode={mode}
+              selectedPlayer={currentPlayer}
+              players={players}
+              setPlayers={setPlayers} />
+          </div>
+          <div>
+            <RailroadsTable />
+          </div>
+        </>
       )}
     </>
   )
