@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { cellStyle, Mode } from "./PropertyTable";
+import { Player, PlayersState } from "../../App";
 
 type PropertyTableRowProps = {
     mode: Mode;
@@ -10,13 +10,10 @@ type PropertyTableRowProps = {
         rent: number[];
         houseCost: number;
         mortgageValue: number;
-
-
-
     };
-    clearFlag: boolean; // Flag identifies that number of houses and hotels is 0
-    // Function to handle the total change for this row
-    onRowTotalChange: (total: number) => void;
+    selectedPlayer: Player | null;
+    players: PlayersState;
+    setPlayers: (players: PlayersState) => void;
 };
 
 const colors: { [key: string]: string } = {
@@ -31,72 +28,234 @@ const colors: { [key: string]: string } = {
 
 };
 
-const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }: PropertyTableRowProps) => {
-    const [totalRow, setTotalRow] = useState(0);
-    const [isCardChecked, setIsCardChecked] = useState(false);
-    const [housesChecked, setHousesChecked] = useState(0);
-    const [isHotelChecked, setIsHotelChecked] = useState(false);
-    const [isMortgageChecked, setIsMortgageChecked] = useState(false);
-
-
-    // Define the type for the mode prop
-
+const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: PropertyTableRowProps) => {
 
     const nameJoined = card.name[mode].split(" ").join(""); // to create a unique id for the radio buttons
 
+    // getting the property info from the selected player
+    const property = selectedPlayer?.properties.find((p) => p.name === card.name[mode]);
+    const isCardChecked = property?.owned || false;
+    const numberOfHouses = property?.houses || 0;
+    const isHotelChecked = property?.hotel || false;
+    const isMortgageChecked = property?.mortgaged || false;
 
+    // Toggles the ownership of the property
     const handleCardCheck = () => {
-        const newCardCheckedState = !isCardChecked;
-        setIsCardChecked(newCardCheckedState);
-        // Wenn die Karte deaktiviert wird, setze alle anderen Werte zurück
-        if (!newCardCheckedState) {
-            setHousesChecked(0);
-            setIsHotelChecked(false);
-            setIsMortgageChecked(false);
-        }
+        if (!selectedPlayer) return;
+
+        const updatedPlayers = players.map((player) => {
+            if (player.id !== selectedPlayer.id) return player;
+
+            const propertyName = card.name[mode];
+            const existingProperty = player.properties.find((p) => p.name === propertyName);
+
+            let updatedProperties;
+
+            if (existingProperty) {
+                // if property already exists  then remove it
+                updatedProperties = player.properties.filter((p) => p.name !== propertyName);
+            } else {
+                // if property doesn't exist  then add it
+                updatedProperties = [
+                    ...player.properties,
+                    {
+                        name: propertyName,
+                        owned: true,
+                        houses: 0,
+                        hotel: false,
+                        mortgaged: false,
+                        total: card.price,
+                    },
+                ];
+            }
+
+            // Calculate the total value of all properties owned by the player
+            const propertiesTotal = updatedProperties.reduce((sum, property) => sum + property.total, 0);
+            return {
+                ...player,
+                properties: updatedProperties,
+                score: {
+                    ...player.score,
+                    properties: propertiesTotal, // Update the player's score with the new total
+                    total: propertiesTotal + (player.score.cash || 0) + (player.score.railroads || 0) + (player.score.utilities || 0), // Update the total score
+                },
+            };
+        });
+
+        setPlayers(updatedPlayers);
     };
 
+
+    // Handles the number of houses on the property
     const handleHousesCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setIsCardChecked(true);
-        setHousesChecked(Number(e.target.value))
-        if (Number(e.target.value) === 4) {
-            setIsHotelChecked(true); // Set hotel to true when 4 houses are selected
-        }
-        if (Number(e.target.value) < 4 && isHotelChecked) {
-            setIsHotelChecked(false); // Set hotel to false when less than 4 houses are selected
-        }
-    }
+        if (!selectedPlayer) return;
 
-    const handleHotelCheck = () => {
-        setIsCardChecked(true);
-        setIsHotelChecked(!isHotelChecked);
-        setHousesChecked(4); // Set houses to 4 when hotel is checked
+        const newHousesChecked = Number(e.target.value); // Get the selected number of houses
+        const propertyName = card.name[mode]; // Get the property name based on the current mode
+
+        const updatedPlayers = players.map((player) => {
+            if (player.id !== selectedPlayer.id) return player;
+
+            // Check if the property exists in the player's properties
+            const propertyExists = player.properties.some((property) => property.name === propertyName);
+
+            const updatedProperties = propertyExists
+                ? player.properties.map((property) =>
+                    property.name === propertyName
+                        ? {
+                            ...property,
+                            owned: true,
+                            houses: newHousesChecked,
+                            hotel: newHousesChecked === 4, // If 4 houses, mark as hotel
+                            mortgaged: false, // Ensure the property is not mortgaged
+                            total: card.price + card.houseCost * newHousesChecked, // Calculate total
+                        }
+                        : property // Keep other properties unchanged
+                )
+                : [
+                    ...player.properties,
+                    {
+                        name: propertyName,
+                        owned: true,
+                        houses: newHousesChecked,
+                        hotel: newHousesChecked === 4,
+                        mortgaged: false,
+                        total: card.price + card.houseCost * newHousesChecked,
+                    },
+                ];
+
+            // Calculate the total value of all properties owned by the player
+            const propertiesTotal = updatedProperties.reduce((sum, property) => sum + property.total, 0);
+
+            return {
+                ...player,
+                properties: updatedProperties,
+                score: {
+                    ...player.score,
+                    properties: propertiesTotal, // Update the player's score with the new total
+                    total: propertiesTotal + (player.score.cash || 0) + (player.score.railroads || 0) + (player.score.utilities || 0), // Update the total score
+                },
+            };
+        });
+
+        setPlayers(updatedPlayers); // Update the players state
     };
 
+    // Handles the hotel purchase on the property
+    const handleHotelCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!selectedPlayer) return;
+
+        const isChecked = e.target.checked; // Whether the hotel is being added or removed
+        const propertyName = card.name[mode]; // Get the property name based on the current mode
+
+        const updatedPlayers = players.map((player) => {
+            if (player.id !== selectedPlayer.id) return player;
+
+            // Check if the property exists in the player's properties
+            const propertyExists = player.properties.some((property) => property.name === propertyName);
+
+            const updatedProperties = propertyExists
+                ? player.properties.map((property) =>
+                    property.name === propertyName
+                        ? {
+                            ...property,
+                            owned: true,
+                            hotel: isChecked,
+                            houses: isChecked ? 4 : 0, // Hotel means 4 houses
+                            mortgaged: false, // Ensure the property is not mortgaged
+                            total: isChecked
+                                ? card.price + card.houseCost * 5 // Hotel adds 5x house cost
+                                : card.price, // Base price if no hotel
+                        }
+                        : property // Keep other properties unchanged
+                )
+                : [
+                    ...player.properties,
+                    {
+                        name: propertyName,
+                        owned: true,
+                        hotel: isChecked,
+                        houses: isChecked ? 4 : 0,
+                        mortgaged: false,
+                        total: isChecked
+                            ? card.price + card.houseCost * 5 // Hotel adds 5x house cost
+                            : card.price, // Base price if no hotel
+                    },
+                ];
+
+            // Calculate the total value of all properties owned by the player
+            const propertiesTotal = updatedProperties.reduce((sum, property) => sum + property.total, 0);
+
+            return {
+                ...player,
+                properties: updatedProperties,
+                score: {
+                    ...player.score,
+                    properties: propertiesTotal, // Update the player's score with the new total
+                    total: propertiesTotal + (player.score.cash || 0) + (player.score.railroads || 0) + (player.score.utilities || 0), // Update the total score
+                },
+            };
+        });
+
+        setPlayers(updatedPlayers); // Update the players state
+    };
+
+    // Handles the mortgage check on the property
     const handleMortgageCheck = () => {
-        setIsCardChecked(true);
-        setIsMortgageChecked(!isMortgageChecked);
+        if (!selectedPlayer) return;
+
+        const propertyName = card.name[mode]; // Name of the property
+
+        const updatedPlayers = players.map((player) => {
+            if (player.id !== selectedPlayer.id) return player;
+
+            // Check if the property exists in the player's properties
+            const propertyExists = player.properties.some((property) => property.name === propertyName);
+
+            const updatedProperties = propertyExists
+                ? player.properties.map((property) =>
+                    property.name === propertyName
+                        ? {
+                            ...property,
+                            mortgaged: !isMortgageChecked, // Toggle the mortgage status
+                            houses: 0, // Houses must be sold before mortgaging
+                            hotel: false, // Hotels must be sold before mortgaging
+                            total: !isMortgageChecked
+                                ? card.price / 2 // Mortgaged value is half the price
+                                : card.price + card.houseCost * numberOfHouses, // Standard value with houses
+                        }
+                        : property // Keep other properties unchanged
+                )
+                : [
+                    ...player.properties,
+                    {
+                        name: propertyName,
+                        owned: true, // Mark the property as owned
+                        mortgaged: true, // Set the property as mortgaged
+                        houses: 0, // No houses when mortgaged
+                        hotel: false, // No hotel when mortgaged
+                        total: card.price / 2, // Mortgaged value is half the price
+                    },
+                ];
+
+            // Calculate the total value of all properties owned by the player
+            const propertiesTotal = updatedProperties.reduce((sum, property) => sum + property.total, 0);
+
+            return {
+                ...player,
+                properties: updatedProperties,
+                score: {
+                    ...player.score,
+                    properties: propertiesTotal, // Update the player's score with the new total
+                    total: propertiesTotal + (player.score.cash || 0) + (player.score.railroads || 0) + (player.score.utilities || 0), // Update the total score
+                },
+            };
+        });
+
+        setPlayers(updatedPlayers); // Update players state with the new properties
     };
 
-    useEffect(() => {
-        setIsCardChecked(false);
-        setHousesChecked(0);
-        setIsHotelChecked(false);
-        setIsMortgageChecked(false);
-        setTotalRow(0);
-        onRowTotalChange(0);
-    }, [clearFlag]);
-
-    useEffect(() => {
-        let total = 0;
-        if (isCardChecked) total += card.price;
-        if (housesChecked) total += card.houseCost * housesChecked;
-        if (isHotelChecked) total += card.houseCost;
-        if (isMortgageChecked) total -= card.price / 2;
-        setTotalRow(total);
-        onRowTotalChange(total);
-
-    }, [isCardChecked, housesChecked, isHotelChecked, isMortgageChecked, card.price, card.houseCost]);
+    const totalRow = property?.total || 0; // Get the total for the current player and property
 
     const checkboxStyle = (color: string) => {
         const colorClasses: { [key: string]: string } = {
@@ -152,10 +311,8 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
                                 name={`houses-${nameJoined}`}
                                 value={val}
                                 className="hidden peer"
-                                defaultChecked={val === 0}
-                                checked={housesChecked === val}
+                                checked={numberOfHouses === val}
                                 onChange={handleHousesCheck}
-                            /* disabled={!isCardChecked} */
                             />
                             <label
                                 htmlFor={`houses${val}-${nameJoined}`}
@@ -178,7 +335,6 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
                         className="hidden peer"
                         checked={isHotelChecked}
                         onChange={handleHotelCheck}
-                    /* disabled={!isCardChecked || housesChecked < 4} */
                     />
                     <label
                         htmlFor={`checkbox2-${nameJoined}`}
@@ -198,7 +354,6 @@ const PropertyTableRow = ({ mode, card, onRowTotalChange, clearFlag: clearFlag }
                         className="hidden peer"
                         checked={isMortgageChecked}
                         onChange={handleMortgageCheck}
-                    /* disabled={!isCardChecked} */
                     />
                     <label
                         htmlFor={`checkbox3-${nameJoined}`}
