@@ -165,7 +165,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                             mortgaged: false, // Ensure the property is not mortgaged
                             total: isChecked
                                 ? card.price + card.houseCost * 5 // Hotel adds 5x house cost
-                                : card.price, // Base price if no hotel
+                                : card.price + card.houseCost * numberOfHouses, 
                         }
                         : property // Keep other properties unchanged
                 )
@@ -179,7 +179,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                         mortgaged: false,
                         total: isChecked
                             ? card.price + card.houseCost * 5 // Hotel adds 5x house cost
-                            : card.price, // Base price if no hotel
+                            : card.price + card.houseCost * numberOfHouses, // Base price with houses
                     },
                 ];
 
