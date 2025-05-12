@@ -1,7 +1,7 @@
 import PropertyTableRow from "./PropertyTableRow";
 import { propertyCards } from "../../variables/cardsInfo";
-import { useEffect, useRef, useState } from "react";
-import { Player, PropertyState } from "../../App";
+import { useState } from "react";
+import { Player, PlayersState, /* PropertyState */ } from "../../App";
 import { OkButtonStyle } from "../Cash";
 
 export const cellStyle = "border border-gray-400 p-2 text-center";
@@ -22,31 +22,19 @@ export type Mode = "classic" | "wunderland";
 type PropertyTableProps = {
     mode: Mode;
     selectedPlayer: Player | null;
+    //setSelectedPlayer: (player: Player | null) => void;
+    players: PlayersState;
+    setPlayers: (players: PlayersState) => void;
     updateProperties: (playerId: string, properties: number) => void;
-    updateCheckedProperties: (playerId: string, properties: PropertyState[]) => void;
+    /* updateCheckedProperties: (playerId: string, properties: PropertyState[]) => void; */
 }
 
-const PropertyTable = ({ mode, selectedPlayer, updateProperties, updateCheckedProperties }: PropertyTableProps) => {
+const PropertyTable = ({ mode, selectedPlayer, /* setSelectedPlayer */ players, setPlayers, updateProperties, /* updateCheckedProperties */ }: PropertyTableProps) => {
     const [rowTotals, setRowTotals] = useState<number[]>([]);
-    const [clearFlag, setClearFlag] = useState(false); // to trigger a reset of all rows in the table
+    //const [clearFlag, setClearFlag] = useState(false); // to trigger a reset of all rows in the table
     const [error, setError] = useState<string | null>(null); // to display error messages
 
-    // Ref to track the previously selected player
-    const previousPlayerRef = useRef<Player | null>(null);
-
-    // Resets the table when the selected player changes
-    useEffect(() => {
-        if (
-            selectedPlayer &&
-            selectedPlayer.id !== previousPlayerRef.current?.id
-        ) {
-            setClearFlag(prev => !prev); // Toggle the clear signal
-            setRowTotals([]);
-        }
-        previousPlayerRef.current = selectedPlayer;
-    }, [selectedPlayer]);
-
-
+   
     // Handler to update the total for a specific row
     const handleRowTotalChange = (index: number, total: number) => {
         setRowTotals((prev) => {
@@ -74,13 +62,32 @@ const PropertyTable = ({ mode, selectedPlayer, updateProperties, updateCheckedPr
 
     const propertyTotal = rowTotals.reduce((sum, rowTotal) => sum + rowTotal, 0);
 
-
-
     // Clears the table
-    const onClearHandler = () => {
-        setClearFlag(prev => !prev);
+   const onClearHandler = () => {
+        if (!selectedPlayer) return;
+    
+        const updatedPlayers = players.map((player) => {
+            if (player.id !== selectedPlayer.id) return player;
+    
+            // Berechne den neuen total-Wert, falls andere Felder fehlen
+            const total = (player.score.cash || 0) + (player.score.railroads || 0) + (player.score.utilities || 0);
+    
+            return {
+                ...player,
+                score: {
+                    ...player.score,
+                    properties: 0, // Reset properties to 0
+                    total: total, // Aktualisiere total
+                },
+                properties: [], // Reset properties to an empty array
+            };
+        });
+    
+        setPlayers(updatedPlayers);
         setRowTotals([]);
     };
+    
+
 
     return (
         <div>
@@ -114,9 +121,9 @@ const PropertyTable = ({ mode, selectedPlayer, updateProperties, updateCheckedPr
                             mode={mode} // Current game mode
                             card={card}
                             onRowTotalChange={(total: number) => handleRowTotalChange(index, total)}
-                            clearFlag={clearFlag} // Signal to clear the row
                             selectedPlayer={selectedPlayer} // Current selected player
-                            updateCheckedProperties={updateCheckedProperties} // Function to update checked properties
+                            players={players} // List of players
+                            setPlayers={setPlayers} // Function to set the players
                         />
                     ))}
                 </tbody>

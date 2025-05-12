@@ -14,7 +14,7 @@ export type Player = {
   id: string;
   properties: PropertyState[];}
 
-type PlayersState = Player[];
+export type PlayersState = Player[];
 
 export type PropertyState = {
   name: string;
@@ -24,17 +24,16 @@ export type PropertyState = {
   mortgaged: boolean;
 }
 
-function App() {
-  const idPlayer1: string = generateId();
-  const idPlayer2: string = generateId();
-  const namePlayer1: string = generateRandomName();
-  const namePlayer2: string = generateRandomName();
-  const [players, setPlayers] = useState<PlayersState>([
-    { id: idPlayer1, name: namePlayer1, score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [] },
-    { id: idPlayer2, name: namePlayer2, score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [] },
-  ]);
+const initialPlayersData: PlayersState = [
+  { id: generateId(), name: generateRandomName(), score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [] },
+  { id: generateId(), name: generateRandomName(), score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [] },
+];
+
+function App() {  
+  const [players, setPlayers] = useState<PlayersState>(
+    initialPlayersData);
   const [mode, setMode] = useState<'classic' | 'wunderland'>('wunderland');
-  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<string>(initialPlayersData[0].id);
 
   const addPlayer = () => {
     if (players.length >= 6) {
@@ -47,9 +46,13 @@ function App() {
   }
 
   const deletePlayer = (id: string) => {
+    if (players.length <= 2) {
+      console.warn('Cannot delete player. At least 2 players are required.');
+      return;
+    }
     const updatedPlayers = players.filter((player) => player.id !== id);
     setPlayers(updatedPlayers);
-    setSelectedPlayer(null);
+    setSelectedPlayer(updatedPlayers[0]?.id); // Set the first player as selected if available
     console.log(`Player is deleted`);
   };
 
@@ -62,19 +65,20 @@ function App() {
     });
     setPlayers(updatedPlayers);
 
-    if (selectedPlayer?.id === id) {
-      setSelectedPlayer({
+    if (selectedPlayer === id) {
+      setSelectedPlayer(/* {
         ...selectedPlayer,
         name: newName,
-      });
+      } */
+     id);
     }
 
     console.log(`Player is edited`);
   };
 
   const selectPlayer = (id: string) => {
-    const selPlayer = players.find((player) => player.id === id) || null;
-    setSelectedPlayer(selPlayer);
+    const selPlayer = players.find((player) => player.id === id) || players[0];
+    setSelectedPlayer(selPlayer.id); // Set the first player as selected if available
   };
 
   const updateCash = (id: string, cash: number) => {
@@ -92,15 +96,11 @@ function App() {
     );
     setPlayers(updatedPlayers);
 
-    if (selectedPlayer?.id === id) {
-      setSelectedPlayer({
-        ...selectedPlayer,
-        score: {
-          ...selectedPlayer.score,
-          cash: cash,
-          total: cash + selectedPlayer.score.properties + selectedPlayer.score.railroads + selectedPlayer.score.utilities,
-        },
-      });
+    if (selectedPlayer === id) {
+      const updatedSelectedPlayer = updatedPlayers.find((player) => player.id === id);
+    if (updatedSelectedPlayer) {
+      setSelectedPlayer(updatedSelectedPlayer.id); // Nur die ID speichern
+    }
     }
     console.log(`Player ${id} cash is updated`);
 
@@ -123,39 +123,16 @@ function App() {
     });
     setPlayers(updatedPlayers);
 
-    if (selectedPlayer?.id === playerId) {
-      setSelectedPlayer({
-        ...selectedPlayer,
-        score: {
-          ...selectedPlayer.score,
-          properties: properties,
-          total: selectedPlayer.score.cash + properties + selectedPlayer.score.railroads + selectedPlayer.score.utilities,
-        },
-      });
-    }
+    if (selectedPlayer === playerId) {      
+        const updatedSelectedPlayer = updatedPlayers.find((player) => player.id === playerId);
+      if (updatedSelectedPlayer) {
+        setSelectedPlayer(updatedSelectedPlayer.id); // Nur die ID speichern
+      }
+      }
   };
 
-
-  const updateCheckedProperties = (playerId: string, properties: PropertyState[]) => {
-    const updatedPlayers = players.map((player) => {
-      if (player.id === playerId) {
-        return {
-          ...player,
-          properties: properties,
-        };
-      }
-      return player;
-    });
-    setPlayers(updatedPlayers);
-
-    if (selectedPlayer?.id === playerId) {
-      setSelectedPlayer({
-        ...selectedPlayer,
-        properties: properties,
-      });
-    }
-  }
-
+  
+ 
   const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
     `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 shadow-md text-white hover:scale-110 ${mode === buttonMode
       ? "bg-blue-500 hover:bg-blue-600"
@@ -166,6 +143,8 @@ function App() {
   const modeHandler = (selectedMode: 'classic' | 'wunderland') => {
     setMode(selectedMode);
   }
+
+  const currentPlayer = players.find((player) => player.id === selectedPlayer) || players[0];
 
 
   return (
@@ -182,9 +161,10 @@ function App() {
               key={player.id}
               name={player.name}
               score={player.score}
-              deleteHandler={() => deletePlayer(player.id)} editHandler={(newName) => editPlayer(player.id, newName)}
+              deleteHandler={() => deletePlayer(player.id)} 
+              editHandler={(newName) => editPlayer(player.id, newName)}
               setSelectedPlayer={() => selectPlayer(player.id)}
-              isSelected={selectedPlayer?.id === player.id} />
+              isSelected={selectedPlayer === player.id} />
           ))}
         </div>
 
@@ -199,13 +179,13 @@ function App() {
         <>
         <div className="mt-4 text-center">
           <h2 className="text-xl font-bold">Selected Player:</h2>
-          <p className="text-lg">{selectedPlayer.name}</p>
-          <p className="text-sm text-gray-500">Cash: {selectedPlayer.score.cash}</p>
-          <p className="text-sm text-gray-500">Property: {selectedPlayer.score.properties}</p>
-          <p className="text-sm text-gray-500">Railroads: {selectedPlayer.score.railroads}</p>
-          <p className="text-sm text-gray-500">Utilities: {selectedPlayer.score.utilities}</p>
-          <p className="text-sm text-gray-500">Total: {selectedPlayer.score.total}</p>
-          {selectedPlayer.properties.map((property, index) => (
+          <p className="text-lg">{currentPlayer.name}</p>
+          <p className="text-sm text-gray-500">Cash: {currentPlayer.score.cash}</p>
+          <p className="text-sm text-gray-500">Property: {currentPlayer.score.properties}</p>
+          <p className="text-sm text-gray-500">Railroads: {currentPlayer.score.railroads}</p>
+          <p className="text-sm text-gray-500">Utilities: {currentPlayer.score.utilities}</p>
+          <p className="text-sm text-gray-500">Total: {currentPlayer.score.total}</p>
+          {currentPlayer.properties.map((property, index) => (
   <div key={index}>
     <ul>Name: {property.name}
     <li>owned: {property.owned ? "Yes" : "No"}</li>
@@ -217,7 +197,7 @@ function App() {
         </div>
       
 
-      <Cash selectedPlayer={selectedPlayer} updateCash={updateCash} />
+      <Cash selectedPlayer={currentPlayer} updateCash={updateCash} />
 
       <div className="flex w-3/5 mx-auto gap-2 justify-end items-center m-5">
         <div className={modeButtonStyle("classic")} onClick={() => modeHandler("classic")}>Classic</div>
@@ -226,9 +206,11 @@ function App() {
       <div>
         <PropertyTable
           mode={mode}
-          selectedPlayer={selectedPlayer}
+          selectedPlayer={currentPlayer}
+          players={players}
+          setPlayers={setPlayers}
           updateProperties={updateProperties}
-          updateCheckedProperties = {updateCheckedProperties} />
+          /* updateCheckedProperties = {updateCheckedProperties} */ />
       </div>
       <div>
         <RailroadsTable />
