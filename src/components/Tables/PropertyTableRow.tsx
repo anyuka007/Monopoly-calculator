@@ -77,6 +77,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                 score: {
                     ...player.score,
                     properties: propertiesTotal, // Update the player's score with the new total
+                    total: propertiesTotal + (player.score.cash || 0) + (player.score.railroads || 0) + (player.score.utilities || 0), // Update the total score
                 },
             };
         });
@@ -132,6 +133,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                 score: {
                     ...player.score,
                     properties: propertiesTotal, // Update the player's score with the new total
+                    total: propertiesTotal + (player.score.cash || 0) + (player.score.railroads || 0) + (player.score.utilities || 0), // Update the total score
                 },
             };
         });
@@ -190,6 +192,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                 score: {
                     ...player.score,
                     properties: propertiesTotal, // Update the player's score with the new total
+                    total: propertiesTotal + (player.score.cash || 0) + (player.score.railroads || 0) + (player.score.utilities || 0), // Update the total score
                 },
             };
         });
@@ -244,6 +247,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                 score: {
                     ...player.score,
                     properties: propertiesTotal, // Update the player's score with the new total
+                    total: propertiesTotal + (player.score.cash || 0) + (player.score.railroads || 0) + (player.score.utilities || 0), // Update the total score
                 },
             };
         });
