@@ -106,7 +106,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                             ...property,
                             owned: true,
                             houses: housesChecked,
-                            hotel: housesChecked === 4,
+                            hotel: isHotelChecked,
                             mortgaged: false, // Ensure the property is not mortgaged
                             total: card.price + card.houseCost * housesChecked, // Calculate total
                         }
@@ -118,7 +118,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                         name: propertyName,
                         owned: true,
                         houses: housesChecked,
-                        hotel: housesChecked === 4, // Hotel means 4 houses
+                        hotel: isHotelChecked, // Hotel means 4 houses
                         mortgaged: false,
                         total: card.price + card.houseCost * housesChecked,
                     },
@@ -161,7 +161,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                             ...property,
                             owned: true,
                             hotel: isChecked,
-                            houses: isChecked ? 4 : 0, // Hotel means 4 houses
+                            houses: isChecked ? 4 : numberOfHouses, // Hotel means 4 houses
                             mortgaged: false, // Ensure the property is not mortgaged
                             total: isChecked
                                 ? card.price + card.houseCost * 5 // Hotel adds 5x house cost
@@ -175,7 +175,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                         name: propertyName,
                         owned: true,
                         hotel: isChecked,
-                        houses: isChecked ? 4 : 0,
+                        houses: isChecked ? 4 : numberOfHouses,
                         mortgaged: false,
                         total: isChecked
                             ? card.price + card.houseCost * 5 // Hotel adds 5x house cost
