@@ -165,7 +165,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                             mortgaged: false, // Ensure the property is not mortgaged
                             total: isChecked
                                 ? card.price + card.houseCost * 5 // Hotel adds 5x house cost
-                                : card.price + card.houseCost * numberOfHouses, 
+                                : card.price + card.houseCost * numberOfHouses,
                         }
                         : property // Keep other properties unchanged
                 )
@@ -273,6 +273,10 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
             {/* Property Name and Price */}
             <td className={`w-2/7 md:w-2/10 ${cellStyle} text-left text-sm md:text-lg ${colors[card.color] || "bg-gray-500"}`}>
                 <div >{card.name[mode]}</div>
+                <div className="md:hidden flex gap-2 justify-between items-center">
+                    
+                        <p>{`${card.price}/${card.houseCost}`}</p>
+                </div>
             </td>
             <td className={`${cellStyle} hidden md:table-cell w-1/10`}>
                 <div >{card.price}</div>
@@ -302,20 +306,20 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
 
             {/* Number of houses */}
             <td className={`w-1/7 md:w-2/10 ${cellStyle}`}>
-            {/* For small screens */}
-            <div className="md:hidden flex justify-center items-center">
-        <select
-            value={numberOfHouses}
-            onChange={(e) => handleHousesCheck(e as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>)}
-            className="w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-            {[0, 1, 2, 3, 4].map((val) => (
-                <option key={val} value={val}>
-                    {val}
-                </option>
-            ))}
-        </select>
-    </div>
+                {/* For small screens */}
+                <div className="md:hidden flex justify-center items-center">
+                    <select
+                        value={numberOfHouses}
+                        onChange={(e) => handleHousesCheck(e as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>)}
+                        className="w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                        {[0, 1, 2, 3, 4].map((val) => (
+                            <option key={val} value={val}>
+                                {val}
+                            </option>
+                        ))}
+                    </select>
+                </div>
                 <div className="hidden md:flex gap-2 justify-center items-center">
                     {[0, 1, 2, 3, 4,].map((val) => (
                         <div key={val} className="relative">
