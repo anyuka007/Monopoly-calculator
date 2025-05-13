@@ -1,7 +1,6 @@
 import PropertyTableRow from "./PropertyTableRow";
 import { propertyCards } from "../../variables/cardsInfo";
 import { Player, PlayersState } from "../../App";
-import { OkButtonStyle } from "../Cash";
 
 export const cellStyle = "border border-gray-400 p-2 text-center";
 
@@ -66,7 +65,7 @@ const PropertyTable = ({ mode, selectedPlayer, players, setPlayers, }: PropertyT
             <div className="w-3/5 mx-auto flex gap-3 justify-end items-center mt-3">
                 <h2>Total Property:</h2>
                 <h2>{propertyTotal}</h2>
-                <button onClick={onClearHandler} className={OkButtonStyle}>Clear</button>
+                <button onClick={onClearHandler} className="w-16 border p-2 rounded-lg text-center cursor-pointer bg-yellow-500 hover:bg-blue-600 hover:scale-110 text-white shadow-md">Clear</button>
             </div>
             {/* Table displaying property data */}
             <table className="border border-gray-400 border-collapse text-center mt-3 mx-auto w-3/5">

@@ -7,8 +7,6 @@ type CashProps = {
     setPlayers: (players: PlayersState) => void;
 }
 
-export const OkButtonStyle = "w-16 border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 bg-yellow-500 text-white shadow-md"
-
 const Cash = ({ selectedPlayer, players, setPlayers, }: CashProps) => {
     const [amount, setAmount] = useState<number>(0);
 

@@ -35,8 +35,8 @@ const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer, is
 
     return (
         <div
-            className={`player flex flex-col justify-center items-center m-2 rounded-lg w-[300px] md:w-[250px] h-[100px] bg-[#eeeded] ${isSelected
-                ? "shadow-[inset 12px_12px_24px_#777777,inset -12px_-12px_24px_#ffffff] scale-115 border-4 border-blue-500" : "shadow-[12px_12px_24px_#777777,-12px_-12px_24px_#ffffff] "}`}
+            className={`player flex flex-col justify-center items-center m-2 rounded-lg w-[90%] md:w-[250px] h-[100px] bg-[#eeeded] ${isSelected
+                ? "shadow-[inset 12px_12px_24px_#777777,inset -12px_-12px_24px_#ffffff] scale-110 md:scale-115 border-4 border-blue-500" : "shadow-[12px_12px_24px_#777777,-12px_-12px_24px_#ffffff] "}`}
             onClick={() => { setSelectedPlayer() }}>
             <div onDoubleClick={onEdit} className="bg-blue-500 h-[50%] w-full flex justify-between items-center p-2 rounded-t-lg">
                 {!isEditMode ? (
@@ -50,7 +50,7 @@ const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer, is
                     />
                 )}
                 {!isEditMode ? (
-                    <div className="w-[18%] md:w-[20%] flex justify-between items-center">
+                    <div className="w-[15%] md:w-[20%] flex justify-between items-center">
                         <button onClick={onEdit}>
                             <Pencil size={iconSize} className={iconStyle} />
                         </button>

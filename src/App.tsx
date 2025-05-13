@@ -44,6 +44,7 @@ function App() {
     }
     const newPlayer: Player = { id: generateId(), name: generateRandomName(), score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [] };
     setPlayers([...players, newPlayer]);
+    setSelectedPlayer(newPlayer.id); // Set the new player as selected
     console.log(`Player ${newPlayer.name} is added`);
   }
 
@@ -78,7 +79,7 @@ function App() {
     const selPlayer = players.find((player) => player.id === id) || players[0];
     setSelectedPlayer(selPlayer.id); // Set the first player as selected if available
   };
-  
+
   const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
     `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 shadow-md text-white hover:scale-110 ${mode === buttonMode
       ? "bg-blue-500 hover:bg-blue-600"
@@ -95,12 +96,12 @@ function App() {
 
   return (
     <>
-      <div className="flex justify-center items-center m-5">
+      <div className="flex justify-center items-center my-5">
         <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-blue-500 to-yellow-600 bg-clip-text text-transparent text-center">
           Monopoly Calculator
         </h1>
       </div>
-      <div className='flex flex-col  md:flex-row w-[95%] m-auto justify-between md:justify-center items-center gap-5'>
+      <div className='flex flex-col  md:flex-row  md:w-3/5 m-auto justify-between md:justify-center items-center gap-5'>
         <div className="flex flex-wrap gap-4 justify-center">
           {players.map((player) => (
             <Player
@@ -115,23 +116,42 @@ function App() {
         </div>
 
         <div className='flex justify-center items-center'>
-          <button className='h-10 p-2 bg-blue-500 rounded-lg shadow-[4px_4px_8px_#777777,-4px_-4px_8px_#ffffff]' onClick={addPlayer}><UserRoundPlus color='white' /></button>
+          <button className='h-10 p-2 bg-blue-500 rounded-lg shadow-[4px_4px_8px_#777777,-4px_-4px_8px_#ffffff] hover:bg-yellow-600 hover:scale-110' onClick={addPlayer}><UserRoundPlus color='white' /></button>
         </div>
       </div>
-      <div className='flex justify-center mt-5'> <p>Select a player</p></div>
 
 
       {selectedPlayer && (
         <>
-          <div className="mt-4 text-center">
-            <h2 className="text-xl font-bold">Selected Player:</h2>
-            <p className="text-lg">{currentPlayer.name}</p>
-            <p className="text-sm text-gray-500">Cash: {currentPlayer.score.cash}</p>
-            <p className="text-sm text-gray-500">Property: {currentPlayer.score.properties}</p>
-            <p className="text-sm text-gray-500">Railroads: {currentPlayer.score.railroads}</p>
-            <p className="text-sm text-gray-500">Utilities: {currentPlayer.score.utilities}</p>
-            <p className="text-sm text-gray-500">Total: {currentPlayer.score.total}</p>
-            {currentPlayer.properties.map((property, index) => (
+          <div className="w-[97%] md:w-3/5 mx-auto my-7 text-center bg-gray-100 py-4 rounded-lg ">
+            <div className="flex flex-col md:flex-row items-center justify-center mb-4">
+              <h2 className="text-sm font-semibold ">Selected Player:</h2>
+              <p className="text-xl font-bold ml-2">{currentPlayer.name}</p>
+            </div>
+            <div className="flex flex-wrap justify-center items-center gap-6 ">
+
+              <div className="flex flex-col items-center">
+                <p className="text-sm text-gray-500">Cash</p>
+                <p className="text-lg font-bold">{currentPlayer.score.cash}</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <p className="text-sm text-gray-500">Property</p>
+                <p className="text-lg font-bold">{currentPlayer.score.properties}</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <p className="text-sm text-gray-500">Railroads</p>
+                <p className="text-lg font-bold">{currentPlayer.score.railroads}</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <p className="text-sm text-gray-500">Utilities</p>
+                <p className="text-lg font-bold">{currentPlayer.score.utilities}</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <p className="text-sm text-gray-500">Total</p>
+                <p className="text-lg font-bold">{currentPlayer.score.total}</p>
+              </div>
+            </div>
+            {/* {currentPlayer.properties.map((property, index) => (
               <div key={index}>
                 <ul>Name: {property.name}
                   <li>owned: {property.owned ? "Yes" : "No"}</li>
@@ -139,7 +159,7 @@ function App() {
                   <li>hotel: {property.hotel ? "Yes" : "No"}</li>
                   <li>mortgaged: {property.mortgaged ? "Yes" : "No"}</li></ul>
               </div>
-            ))}
+            ))} */}
           </div>
 
 
