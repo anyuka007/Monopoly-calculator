@@ -125,7 +125,7 @@ function App() {
         <>
           <div className="w-[97%] md:w-3/5 mx-auto my-7 text-center bg-gray-100 py-4 rounded-lg ">
             <div className="flex flex-col md:flex-row items-center justify-center mb-4">
-              <h2 className="text-sm font-semibold ">Selected Player:</h2>
+              {/* <h2 className="text-sm font-semibold">Selected Player:</h2> */}
               <p className="text-xl font-bold ml-2">{currentPlayer.name}</p>
             </div>
             <div className="flex flex-wrap justify-center items-center gap-6 ">

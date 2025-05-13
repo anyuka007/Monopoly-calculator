@@ -87,10 +87,10 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
 
 
     // Handles the number of houses on the property
-    const handleHousesCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleHousesCheck = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         if (!selectedPlayer) return;
 
-        const housesChecked = Number(e.target.value); // Get the selected number of houses
+        const housesChecked = Number((e.target as HTMLInputElement | HTMLSelectElement).value); // Get the selected number of houses
         const propertyName = card.name[mode]; // Get the property name based on the current mode
 
         const updatedPlayers = players.map((player) => {
@@ -271,18 +271,18 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
     return (
         <tr>
             {/* Property Name and Price */}
-            <td className={`${cellStyle} text-left ${colors[card.color] || "bg-gray-500"}`}>
+            <td className={`w-2/7 md:w-2/10 ${cellStyle} text-left text-sm md:text-lg ${colors[card.color] || "bg-gray-500"}`}>
                 <div >{card.name[mode]}</div>
             </td>
-            <td className={`${cellStyle}`}>
+            <td className={`${cellStyle} hidden md:table-cell w-1/10`}>
                 <div >{card.price}</div>
             </td>
-            <td className={`${cellStyle}`}>
+            <td className={`${cellStyle} hidden md:table-cell w-1/10`}>
                 <div >{card.houseCost}</div>
             </td>
 
             {/* Is card purchased */}
-            <td className={cellStyle}>
+            <td className={`w-1/7 md:w-1/10 ${cellStyle}`}>
                 <div className="flex justify-center">
                     <input
                         type="checkbox"
@@ -301,8 +301,22 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
             </td>
 
             {/* Number of houses */}
-            <td className={cellStyle}>
-                <div className="flex gap-2 justify-center items-center">
+            <td className={`w-1/7 md:w-2/10 ${cellStyle}`}>
+            {/* For small screens */}
+            <div className="md:hidden flex justify-center items-center">
+        <select
+            value={numberOfHouses}
+            onChange={(e) => handleHousesCheck(e as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>)}
+            className="w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+            {[0, 1, 2, 3, 4].map((val) => (
+                <option key={val} value={val}>
+                    {val}
+                </option>
+            ))}
+        </select>
+    </div>
+                <div className="hidden md:flex gap-2 justify-center items-center">
                     {[0, 1, 2, 3, 4,].map((val) => (
                         <div key={val} className="relative">
                             <input
@@ -327,7 +341,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
             </td>
 
             {/* Is hotel purchased */}
-            <td className={cellStyle}>
+            <td className={`w-1/7 md:w-1/10 ${cellStyle}`}>
                 <div className="flex justify-center">
                     <input
                         type="checkbox"
@@ -346,7 +360,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
             </td>
 
             {/* Is card in mortgage */}
-            <td className={cellStyle}>
+            <td className={`w-1/7 md:w-1/10 ${cellStyle}`}>
                 <div className="flex justify-center">
                     <input
                         type="checkbox"
@@ -365,7 +379,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
             </td>
 
             {/* Total */}
-            <td className={cellStyle}>
+            <td className={`w-1/7 md:w-1/10 ${cellStyle}`}>
                 <div>
                     <p>{totalRow}</p></div>
             </td>
