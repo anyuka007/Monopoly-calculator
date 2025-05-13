@@ -78,31 +78,7 @@ function App() {
     const selPlayer = players.find((player) => player.id === id) || players[0];
     setSelectedPlayer(selPlayer.id); // Set the first player as selected if available
   };
-
-  const updateCash = (id: string, cash: number) => {
-    const updatedPlayers = players.map((player) => {
-      if (player.id === id) {
-        const updatedScore = {
-          ...player.score,
-          cash: cash,
-          total: cash + player.score.properties + player.score.railroads + player.score.utilities, // Berechne total neu
-        };
-        return { ...player, score: updatedScore };
-      }
-      return player;
-    }
-    );
-    setPlayers(updatedPlayers);
-
-    if (selectedPlayer === id) {
-      const updatedSelectedPlayer = updatedPlayers.find((player) => player.id === id);
-      if (updatedSelectedPlayer) {
-        setSelectedPlayer(updatedSelectedPlayer.id); // Nur die ID speichern
-      }
-    }
-    console.log(`Player ${id} cash is updated`);
-
-  }
+  
   const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
     `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 shadow-md text-white hover:scale-110 ${mode === buttonMode
       ? "bg-blue-500 hover:bg-blue-600"
@@ -167,7 +143,7 @@ function App() {
           </div>
 
 
-          <Cash selectedPlayer={currentPlayer} updateCash={updateCash} />
+          <Cash selectedPlayer={currentPlayer} players={players} setPlayers={setPlayers} />
 
           <div className="flex w-3/5 mx-auto gap-2 justify-end items-center m-5">
             <div className={modeButtonStyle("classic")} onClick={() => modeHandler("classic")}>Classic</div>
