@@ -259,9 +259,8 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
 
     const checkboxStyle = (color: string) => {
         const colorClasses: { [key: string]: string } = {
-            green: "peer-checked:bg-green-500 hover:border-green-500 before:content-[''] peer-checked:before:content-['✓']",
-            lime: "peer-checked:bg-lime-500 hover:border-lime-500 before:content-[''] peer-checked:before:content-['✓']",
-            blue: "peer-checked:bg-[var(--primary-color)] hover:border-[var(--primary-color)]",
+            check: "peer-checked:bg-[var(--primary-color)] hover:border-[var(--primary-color)] before:content-[''] peer-checked:before:content-['✓']",
+            number: `${numberOfHouses>0 ? "peer-checked:bg-[var(--primary-color)]" : ""} hover:border-[var(--primary-color)]`,
         };
         return `w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  peer-checked:text-white transition-all duration-200
         before:text-lg 
@@ -297,7 +296,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                     />
                     <label
                         htmlFor={`checkbox1-${nameJoined}`}
-                        className={checkboxStyle("lime")}
+                        className={checkboxStyle("check")}
                     >
                         <span className="hidden peer-checked:inline-block">✓</span>
                     </label>
@@ -334,7 +333,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                             />
                             <label
                                 htmlFor={`houses${val}-${nameJoined}`}
-                                className={checkboxStyle("blue")}
+                                className={checkboxStyle("number")}
                             >
                                 {/* {val === 0 ? "-" : val} */}
                                 {val}
@@ -356,7 +355,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                     />
                     <label
                         htmlFor={`checkbox2-${nameJoined}`}
-                        className={checkboxStyle("green")}
+                        className={checkboxStyle("check")}
                     >
                     </label>
                 </div>
@@ -375,7 +374,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                     />
                     <label
                         htmlFor={`checkbox3-${nameJoined}`}
-                        className={checkboxStyle("lime")}
+                        className={checkboxStyle("check")}
                     >
                         <span className="hidden peer-checked:inline-block">✓</span>
                     </label>
