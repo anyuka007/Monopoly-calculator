@@ -116,7 +116,7 @@ function App() {
         </div>
 
         <div className='flex justify-center items-center'>
-          <button className='h-10 p-2 bg-[var(--primary-color)] rounded-lg shadow-[4px_4px_8px_#777777,-4px_-4px_8px_#ffffff] hover:bg-[var(--secondary-color)] hover:scale-110' onClick={addPlayer}><UserRoundPlus color='white' /></button>
+          <button className='h-10 p-2 bg-[var(--primary-color)] rounded-lg hover:bg-[var(--secondary-color)] hover:scale-110' onClick={addPlayer}><UserRoundPlus color='white' /></button>
         </div>
       </div>
 
@@ -131,23 +131,23 @@ function App() {
             <div className="flex flex-wrap justify-center items-center gap-6 ">
 
               <div className="flex flex-col items-center">
-                <p className="text-sm text-gray-500">Cash</p>
+                <p className="text-sm text-[var(--tertiary-color)]">Cash</p>
                 <p className="text-lg font-bold">{currentPlayer.score.cash}</p>
               </div>
               <div className="flex flex-col items-center">
-                <p className="text-sm text-gray-500">Property</p>
+                <p className="text-sm text-[var(--tertiary-color)]">Property</p>
                 <p className="text-lg font-bold">{currentPlayer.score.properties}</p>
               </div>
               <div className="flex flex-col items-center">
-                <p className="text-sm text-gray-500">Railroads</p>
+                <p className="text-sm text-[var(--tertiary-color)]">Railroads</p>
                 <p className="text-lg font-bold">{currentPlayer.score.railroads}</p>
               </div>
               <div className="flex flex-col items-center">
-                <p className="text-sm text-gray-500">Utilities</p>
+                <p className="text-sm text-[var(--tertiary-color)]">Utilities</p>
                 <p className="text-lg font-bold">{currentPlayer.score.utilities}</p>
               </div>
               <div className="flex flex-col items-center">
-                <p className="text-sm text-gray-500">Total</p>
+                <p className="text-sm text-[var(--tertiary-color)]">Total</p>
                 <p className="text-lg font-bold">{currentPlayer.score.total}</p>
               </div>
             </div>
@@ -165,7 +165,7 @@ function App() {
 
           <Cash selectedPlayer={currentPlayer} players={players} setPlayers={setPlayers} />
 
-          <div className="flex w-3/5 mx-auto gap-2 justify-end items-center m-5">
+          <div className="flex w-4/5 mx-auto gap-2 justify-end items-center m-5">
             <div className={modeButtonStyle("classic")} onClick={() => modeHandler("classic")}>Classic</div>
             <div className={modeButtonStyle("wunderland")} onClick={() => modeHandler("wunderland")}>Wunderland</div>
           </div>

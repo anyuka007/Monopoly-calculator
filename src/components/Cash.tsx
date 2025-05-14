@@ -57,7 +57,7 @@ const Cash = ({ selectedPlayer, players, setPlayers, }: CashProps) => {
 
     return (
         <div>
-            <div className='flex justify-start items-center gap-4 w-3/5 mx-auto mt-7'>
+            <div className='flex justify-start items-center gap-4 w-4/5 mx-auto mt-7'>
                 <p>Cash</p>
                 <input className="border p-2 rounded-lg" type="number"
                     onChange={handleCashChange} // Update amount on change
