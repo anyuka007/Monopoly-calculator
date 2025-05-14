@@ -261,7 +261,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
         const colorClasses: { [key: string]: string } = {
             green: "peer-checked:bg-green-500 hover:border-green-500 before:content-[''] peer-checked:before:content-['✓']",
             lime: "peer-checked:bg-lime-500 hover:border-lime-500 before:content-[''] peer-checked:before:content-['✓']",
-            blue: "peer-checked:bg-blue-500 hover:border-blue-500",
+            blue: "peer-checked:bg-[var(--primary-color)] hover:border-[var(--primary-color)]",
         };
         return `w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  peer-checked:text-white transition-all duration-200
         before:text-lg 
@@ -311,7 +311,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                     <select
                         value={numberOfHouses}
                         onChange={(e) => handleHousesCheck(e as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>)}
-                        className="w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className={`w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  appearance-none focus:outline-none  ${numberOfHouses > 0 ? "bg-[var(--primary-color)]" : ""}`}
                     >
                         {[0, 1, 2, 3, 4].map((val) => (
                             <option key={val} value={val}>

@@ -82,8 +82,8 @@ function App() {
 
   const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
     `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 shadow-md text-white hover:scale-110 ${mode === buttonMode
-      ? "bg-blue-500 hover:bg-blue-600"
-      : "bg-yellow-500 hover:bg-yellow-600"
+      ? "bg-[var(--primary-color)] hover:bg-[var(--primary-color)]"
+      : "bg-[var(--secondary-color)] hover:bg-[var(--secondary-color)]"
     }`;
 
 
@@ -97,7 +97,7 @@ function App() {
   return (
     <>
       <div className="flex justify-center items-center my-5">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-blue-500 to-yellow-600 bg-clip-text text-transparent text-center">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-[var(--secondary-color)] via-[var(--primary-color)] to-[var(--secondary-color)] bg-clip-text text-transparent text-center">
           Monopoly Calculator
         </h1>
       </div>
@@ -116,14 +116,14 @@ function App() {
         </div>
 
         <div className='flex justify-center items-center'>
-          <button className='h-10 p-2 bg-blue-500 rounded-lg shadow-[4px_4px_8px_#777777,-4px_-4px_8px_#ffffff] hover:bg-yellow-600 hover:scale-110' onClick={addPlayer}><UserRoundPlus color='white' /></button>
+          <button className='h-10 p-2 bg-[var(--primary-color)] rounded-lg shadow-[4px_4px_8px_#777777,-4px_-4px_8px_#ffffff] hover:bg-[var(--secondary-color)] hover:scale-110' onClick={addPlayer}><UserRoundPlus color='white' /></button>
         </div>
       </div>
 
 
       {selectedPlayer && (
         <>
-          <div className="w-[97%] md:w-3/5 mx-auto my-7 text-center bg-gray-100 py-4 rounded-lg ">
+          <div className="w-[97%] md:w-3/5 mx-auto my-7 text-center py-4 ">
             <div className="flex flex-col md:flex-row items-center justify-center mb-4">
               {/* <h2 className="text-sm font-semibold">Selected Player:</h2> */}
               <p className="text-xl font-bold ml-2">{currentPlayer.name}</p>

@@ -36,14 +36,14 @@ const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer, is
     return (
         <div
             className={`player flex flex-col justify-center items-center m-2 rounded-lg w-[90%] md:w-[250px] h-[100px] bg-[#eeeded] ${isSelected
-                ? "shadow-[inset 12px_12px_24px_#777777,inset -12px_-12px_24px_#ffffff] scale-110 md:scale-115 border-4 border-blue-500" : "shadow-[12px_12px_24px_#777777,-12px_-12px_24px_#ffffff] "}`}
+                ? " scale-110 md:scale-115 border-4 border-[var(--primary-color)]" : ""}`}
             onClick={() => { setSelectedPlayer() }}>
-            <div onDoubleClick={onEdit} className="bg-blue-500 h-[50%] w-full flex justify-between items-center p-2 rounded-t-lg">
+            <div onDoubleClick={onEdit} className="bg-[var(--primary-color)] h-[50%] w-full flex justify-between items-center p-2 rounded-t-lg">
                 {!isEditMode ? (
                     <p className="truncate w-[80%] text-white">{name}</p>
                 ) : (
                     <input
-                        className="w-[80%] text-white bg-blue-500 border-b border-b-white focus:outline-none"
+                        className="w-[80%] text-white bg-[var(--primary-color)] border-b border-b-white focus:outline-none"
                         type="text"
                         value={newName}
                         onChange={(e) => setNewName(e.target.value)}
@@ -69,7 +69,7 @@ const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer, is
                     </div>
                 )}
             </div>
-            <div className="bg-yellow-500 w-full h-[50%] flex justify-center items-center rounded-b-lg">
+            <div className="bg-[var(--secondary-color)] w-full h-[50%] flex justify-center items-center rounded-b-lg">
                 <p className="text-2xl text-white">{score.total}</p>
             </div>
         </div>

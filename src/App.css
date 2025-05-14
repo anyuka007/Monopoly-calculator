@@ -2,9 +2,9 @@
     border: 1px solid black;
 } */
 
-/* body {
-    background-image: url('/bg1.jpg');
-    background-image: url('https://images.pexels.com/photos/1329644/pexels-photo-1329644.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+body {
+        background-image: url('/public/bg1.jpg');
     background-size: cover;
     background-position: center;
-} */
+    color: #fff;
+}
