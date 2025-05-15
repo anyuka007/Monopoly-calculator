@@ -81,9 +81,9 @@ function App() {
   };
 
   const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
-    `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 shadow-md text-white hover:scale-110 ${mode === buttonMode
-      ? "bg-[var(--primary-color)] hover:bg-[var(--primary-color)]"
-      : "bg-[var(--secondary-color)] hover:bg-[var(--secondary-color)]"
+    `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 shadow-md text-white hover:scale-120 ${mode === buttonMode
+      ? "scale-115 border-2 border-[var(--secondary-color)] bg-[var(--primary-color)] hover:bg-[var(--primary-color)]"
+      : "opacity-50 bg-[var(--secondary-color)] hover:bg-[var(--secondary-color)] hover:opacity-100"
     }`;
 
 
@@ -165,7 +165,7 @@ function App() {
 
           <Cash selectedPlayer={currentPlayer} players={players} setPlayers={setPlayers} />
 
-          <div className="flex w-4/5 mx-auto gap-2 justify-end items-center m-5">
+          <div className="flex w-4/5 mx-auto gap-7 justify-end items-center m-5">
             <div className={modeButtonStyle("classic")} onClick={() => modeHandler("classic")}>Classic</div>
             <div className={modeButtonStyle("wunderland")} onClick={() => modeHandler("wunderland")}>Wunderland</div>
           </div>
