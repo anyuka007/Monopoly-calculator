@@ -59,7 +59,7 @@ const Cash = ({ selectedPlayer, players, setPlayers, }: CashProps) => {
         <div>
             <div className='flex justify-start items-center gap-4 w-4/5 mx-auto mt-7'>
                 <p>Cash</p>
-                <input className="border p-2 rounded-lg" type="number"
+                <input className="w-30 text-center border-b-3 p-2 border-[var(--primary-color)] outline-none" type="number"
                     onChange={handleCashChange} // Update amount on change
                     value={amount === 0 ? "" : amount} // Display empty string if amount is 0
                     onBlur={handleSave} // Save on blur (when the input loses focus)
