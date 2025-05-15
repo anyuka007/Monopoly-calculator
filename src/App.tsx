@@ -81,8 +81,8 @@ function App() {
   };
 
   const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
-    `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 shadow-md text-white hover:scale-120 ${mode === buttonMode
-      ? "scale-115 border-2 border-[var(--secondary-color)] bg-[var(--primary-color)] hover:bg-[var(--primary-color)]"
+    `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 shadow-md text-white hover:scale-115 ${mode === buttonMode
+      ? "scale-110 border-2 border-[var(--secondary-color)] bg-[var(--primary-color)] hover:bg-[var(--primary-color)]"
       : "opacity-50 bg-[var(--secondary-color)] hover:bg-[var(--secondary-color)] hover:opacity-100"
     }`;
 
@@ -123,7 +123,7 @@ function App() {
 
       {selectedPlayer && (
         <>
-          <div className="w-[97%] md:w-3/5 mx-auto my-7 text-center py-4 ">
+          <div className="w-[95%] md:w-3/5 mx-auto my-7 text-center py-4 ">
             <div className="flex flex-col md:flex-row items-center justify-center mb-4">
               {/* <h2 className="text-sm font-semibold">Selected Player:</h2> */}
               <p className="text-xl font-bold ml-2">{currentPlayer.name}</p>
@@ -165,7 +165,7 @@ function App() {
 
           <Cash selectedPlayer={currentPlayer} players={players} setPlayers={setPlayers} />
 
-          <div className="flex w-4/5 mx-auto gap-7 justify-end items-center m-5">
+          <div className="flex w-[95%] md:w-4/5 mx-auto gap-5 justify-end items-center m-5">
             <div className={modeButtonStyle("classic")} onClick={() => modeHandler("classic")}>Classic</div>
             <div className={modeButtonStyle("wunderland")} onClick={() => modeHandler("wunderland")}>Wunderland</div>
           </div>
