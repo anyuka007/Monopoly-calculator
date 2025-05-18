@@ -4,8 +4,6 @@
 
 ---
 
-## **Monopoly Calculator**
-
 The Monopoly Calculator is a React-based application designed to help players manage their Monopoly game. It allows users to track player scores, properties, railroads, utilities, and cash in an intuitive and interactive interface.
 
 ---
