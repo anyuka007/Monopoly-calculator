@@ -70,7 +70,7 @@ const PropertyTable = ({ mode, selectedPlayer, players, setPlayers, }: PropertyT
             {/* Table displaying property data */}
             <table className="border border-[var(--tertiary-color)] border-collapse text-center mt-3 mx-auto w-[95%] md:w-4/5 ">
                 <thead className="w-full">
-                    <tr className="w-full bg-[var(--tertiary-color)] text-xs md:text-lg font-bold text-gray-700">
+                    <tr className="w-full bg-[var(--tertiary-color)] text-xs md:text-lg font-bold text-gray-700 *:not-last:border-r-gray-400">
                         <th className={`hidden md:table-cell ${cellStyle} w-2/7 md:w-2/10`}>Name</th>
                         <th className={`md:hidden ${cellStyle} w-2/7 md:w-2/10`}>Name <br />Price / Per House</th>
                         <th className={`${cellStyle} hidden md:table-cell w-1/10`}>Price</th>
