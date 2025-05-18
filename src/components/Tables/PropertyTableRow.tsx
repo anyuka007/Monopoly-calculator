@@ -313,7 +313,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                         className={`w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  appearance-none focus:outline-none  ${numberOfHouses > 0 ? "bg-[var(--primary-color)]" : ""}`}
                     >
                         {[0, 1, 2, 3, 4].map((val) => (
-                            <option key={val} value={val}>
+                            <option className="bg-[var(--primary-color)]" key={val} value={val}>
                                 {val}
                             </option>
                         ))}
