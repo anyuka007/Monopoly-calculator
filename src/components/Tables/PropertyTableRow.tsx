@@ -18,7 +18,7 @@ type PropertyTableRowProps = {
 
 const colors: { [key: string]: string } = {
     brown: "bg-[#A13C33]",
-    sky: "bg-[#C3CED8]",
+    sky: "bg-[#8395a8]",
     pink: "bg-[#E51D72]",
     orange: "bg-[#FF8111]",
     red: "bg-[#ED0030]",
@@ -270,7 +270,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
     return (
         <tr>
             {/* Property Name and Price */}
-            <td className={`w-2/7 md:w-2/10 ${cellStyle} text-left text-sm md:text-lg ${colors[card.color] || "bg-gray-500"}`}>
+            <td className={`w-2/7 md:w-2/10 ${cellStyle} text-left text-xs md:text-lg ${colors[card.color] || "bg-gray-500"}`}>
                 <div >{card.name[mode]}</div>
                 <div className="md:hidden flex gap-2 justify-between items-center">
                     

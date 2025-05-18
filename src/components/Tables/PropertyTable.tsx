@@ -65,12 +65,12 @@ const PropertyTable = ({ mode, selectedPlayer, players, setPlayers, }: PropertyT
             <div className="w-[95%] md:w-4/5 mx-auto flex gap-3 justify-end items-center mt-3">
                 <h2>Total Property:</h2>
                 <h2>{propertyTotal}</h2>
-                <button onClick={onClearHandler} className="w-16 border p-2 rounded-lg text-center cursor-pointer bg-[var(--secondary-color)] hover:bg-[var(--primary-color)] hover:scale-110 text-white shadow-md">Clear</button>
+                <button onClick={onClearHandler} className="w-16 border p-1 rounded-lg text-center cursor-pointer bg-[var(--secondary-color)] hover:bg-[var(--primary-color)] hover:scale-110 text-white shadow-md">Clear</button>
             </div>
             {/* Table displaying property data */}
             <table className="border border-[var(--tertiary-color)] border-collapse text-center mt-3 mx-auto w-[95%] md:w-4/5 ">
                 <thead className="w-full">
-                    <tr className="w-full bg-[var(--tertiary-color)] text-sm md:text-lg font-bold text-gray-700">
+                    <tr className="w-full bg-[var(--tertiary-color)] text-xs md:text-lg font-bold text-gray-700">
                         <th className={`hidden md:table-cell ${cellStyle} w-2/7 md:w-2/10`}>Name</th>
                         <th className={`md:hidden ${cellStyle} w-2/7 md:w-2/10`}>Name <br />Price / Per House</th>
                         <th className={`${cellStyle} hidden md:table-cell w-1/10`}>Price</th>
