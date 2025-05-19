@@ -13,6 +13,7 @@ export type Player = {
   score: { cash: number, properties: number, railroads: number, utilities: number, total: number };
   id: string;
   properties: PropertyState[];
+  railroads: RailroadsState[]
 }
 
 export type PlayersState = Player[];
@@ -26,9 +27,16 @@ export type PropertyState = {
   total: number;
 }
 
+export type RailroadsState = {
+  name: string;
+  owned: boolean;
+  mortgaged: boolean;
+  total: number;
+}
+
 const initialPlayersData: PlayersState = [
-  { id: generateId(), name: generateRandomName(), score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [] },
-  { id: generateId(), name: generateRandomName(), score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [] },
+  { id: generateId(), name: generateRandomName(), score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [], railroads: [] },
+  { id: generateId(), name: generateRandomName(), score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [], railroads: [] },
 ];
 
 function App() {
@@ -42,7 +50,7 @@ function App() {
       alert('Cannot add more than 6 players');
       return;
     }
-    const newPlayer: Player = { id: generateId(), name: generateRandomName(), score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [] };
+    const newPlayer: Player = { id: generateId(), name: generateRandomName(), score: { cash: 0, properties: 0, railroads: 0, utilities: 0, total: 0 }, properties: [], railroads: [] };
     setPlayers([...players, newPlayer]);
     setSelectedPlayer(newPlayer.id); // Set the new player as selected
     console.log(`Player ${newPlayer.name} is added`);
@@ -176,8 +184,21 @@ function App() {
               players={players}
               setPlayers={setPlayers} />
           </div>
-          <div>
-            <RailroadsTable />
+          <div className='w-[95%] mx-auto md:w-4/5 flex flex-col md:flex-row  justify-between items-center'>
+            <div className='w-1/2'>
+              <RailroadsTable
+                mode={mode}
+                selectedPlayer={currentPlayer}
+                players={players}
+                setPlayers={setPlayers} />
+            </div>
+            <div className='w-1/2'>
+              <RailroadsTable
+                mode={mode}
+                selectedPlayer={currentPlayer}
+                players={players}
+                setPlayers={setPlayers} />
+            </div>
           </div>
         </>
       )}

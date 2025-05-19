@@ -8,7 +8,7 @@ export type PropertyCard = {
   };
   
   export type RailroadCard = {
-    name: string;
+    name: { classic: string; wunderland: string };
     price: number;
     rent: number[];
     mortgageValue: number;
@@ -201,27 +201,27 @@ export type PropertyCard = {
   ];
 
 
-  export const railroads: RailroadCard[] = [
+  export const railroadCards: RailroadCard[] = [
     {
-      name: "Reading Railroad",
+      name: {classic: "Reading Railroad", wunderland: "Bahnhof Knuffingen"},
       price: 200,
       rent: [25, 50, 100, 200], // Rent increases with the number of railroads owned
       mortgageValue: 100,
     },
     {
-      name: "Pennsylvania Railroad",
+      name: {classic: "Pennsylvania Railroad", wunderland: "Bahnhof Dammtor Hamburg"},
       price: 200,
       rent: [25, 50, 100, 200],
       mortgageValue: 100,
     },
     {
-      name: "B&O Railroad",
+      name: {classic: "B&O Railroad", wunderland: "Bahnhof Termini Rom"},
       price: 200,
       rent: [25, 50, 100, 200],
       mortgageValue: 100,
     },
     {
-      name: "Short Line",
+      name: {classic: "Short Line", wunderland: "Bahnhof Porta Alpina"},
       price: 200,
       rent: [25, 50, 100, 200],
       mortgageValue: 100,
