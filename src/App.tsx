@@ -184,15 +184,15 @@ function App() {
               players={players}
               setPlayers={setPlayers} />
           </div>
-          <div className='w-[95%] mx-auto md:w-4/5 flex flex-col md:flex-row  justify-between items-center'>
-            <div className='w-1/2'>
+          <div className='w-[95%] mx-auto md:w-4/5 flex flex-col md:flex-row  justify-between items-center gap-5'>
+            <div className='w-full md:w-1/2'>
               <RailroadsTable
                 mode={mode}
                 selectedPlayer={currentPlayer}
                 players={players}
                 setPlayers={setPlayers} />
             </div>
-            <div className='w-1/2'>
+            <div className='w-full md:w-1/2'>
               <RailroadsTable
                 mode={mode}
                 selectedPlayer={currentPlayer}

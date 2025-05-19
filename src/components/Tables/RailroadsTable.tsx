@@ -56,13 +56,13 @@ const onClearHandler = () => {
         <div>
         
                     {/* Clear button */}
-                    <div className="w-[95%] md:w-4/5 mx-auto flex gap-3 justify-end items-center mt-3">
+                    <div className=" flex gap-3 justify-end items-center mt-3 ">
                         <h2> Railroads:</h2>
                         <h2>{railroadsTotal}</h2>
                         <button onClick={onClearHandler} className="w-16 border p-1 rounded-lg text-center cursor-pointer bg-[var(--secondary-color)] hover:bg-[var(--primary-color)] hover:scale-110 text-white shadow-md">Clear</button>
                     </div>
                     {/* Table displaying railroads data */}
-                    <table className="border border-[var(--tertiary-color)] border-collapse text-center mt-3 mx-auto w-[95%] md:w-4/5 ">
+                    <table className="border border-[var(--tertiary-color)] border-collapse text-center mt-3 mx-auto md:mx-0">
                         <thead className="w-full">
                             <tr className="w-full bg-[var(--tertiary-color)] text-xs md:text-lg font-bold text-gray-700 *:not-last:border-r-gray-400">
                                 <th className={`${cellStyle} w-2/6`}>Name</th>                               
@@ -87,7 +87,7 @@ const onClearHandler = () => {
                         </tbody>
                     </table>
                     {/* Display total railroads value and save button */}
-                    <div className="w-4/5 mx-auto flex gap-2 justify-end items-center mt-3">
+                    <div className=" flex gap-2 justify-end items-center mt-3">
                         <div className="flex gap-2">
                             <h2>Total Railroads:</h2>
                             <h2>{railroadsTotal}</h2>
