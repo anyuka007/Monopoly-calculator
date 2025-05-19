@@ -53,7 +53,7 @@ const onClearHandler = () => {
 };
 
     return (
-        <div>
+        <>
         
                     {/* Clear button */}
                     <div className=" flex gap-3 justify-end items-center mt-3 ">
@@ -62,7 +62,7 @@ const onClearHandler = () => {
                         <button onClick={onClearHandler} className="w-16 border p-1 rounded-lg text-center cursor-pointer bg-[var(--secondary-color)] hover:bg-[var(--primary-color)] hover:scale-110 text-white shadow-md">Clear</button>
                     </div>
                     {/* Table displaying railroads data */}
-                    <table className="border border-[var(--tertiary-color)] border-collapse text-center mt-3 mx-auto md:mx-0">
+                    <table className="w-full border border-[var(--tertiary-color)] border-collapse text-center mt-3 mx-auto ">
                         <thead className="w-full">
                             <tr className="w-full bg-[var(--tertiary-color)] text-xs md:text-lg font-bold text-gray-700 *:not-last:border-r-gray-400">
                                 <th className={`${cellStyle} w-2/6`}>Name</th>                               
@@ -94,7 +94,7 @@ const onClearHandler = () => {
                         </div>
                     </div>
         
-        </div>
+        </>
             );
     
 }
