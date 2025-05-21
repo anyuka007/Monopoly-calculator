@@ -229,7 +229,7 @@ export type PropertyCard = {
   ]
 
 
-  export const utilities: UtilityCard[] = [
+  export const utilitiesCards: UtilityCard[] = [
     {
       name: {classic:"Electric Company", wunderland: "Windkraftwerk Skandinavien"},
       price: 150,
