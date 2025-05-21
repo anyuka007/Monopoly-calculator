@@ -117,8 +117,8 @@ function App() {
           Monopoly Calculator
         </h1>
       </div>
-      <div className='flex flex-col  md:flex-row  md:w-3/5 m-auto justify-between md:justify-center items-center gap-5'>
-        <div className="flex flex-wrap gap-4 justify-center">
+      <div className='flex flex-col  md:flex-row  w-[95%] md:w-4/5 m-auto justify-between md:justify-center items-center gap-5'>
+        
           {players.map((player) => (
             <Player
               key={player.id}
@@ -129,7 +129,6 @@ function App() {
               setSelectedPlayer={() => selectPlayer(player.id)}
               isSelected={selectedPlayer === player.id} />
           ))}
-        </div>
 
         <div className='flex justify-center items-center'>
           <button className='h-10 p-2 bg-[var(--primary-color)] rounded-lg hover:bg-[var(--secondary-color)] hover:scale-110' onClick={addPlayer}><UserRoundPlus color='white' /></button>
@@ -139,7 +138,7 @@ function App() {
 
       {selectedPlayer && (
         <>
-          <div className="w-[95%] md:w-3/5 mx-auto my-7 text-center py-4 ">
+          <div className="w-[95%] md:w-4/5 mx-auto my-7 text-center py-4 ">
             <div className="flex flex-col md:flex-row items-center justify-center mb-4">
               {/* <h2 className="text-sm font-semibold">Selected Player:</h2> */}
               <p className="text-xl font-bold ml-2">{currentPlayer.name}</p>

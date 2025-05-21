@@ -35,8 +35,8 @@ const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer, is
 
     return (
         <div
-            className={`player flex flex-col justify-center items-center m-2 rounded-lg w-[95%] md:w-[250px] h-[100px] bg-[#eeeded] ${isSelected
-                ? " scale-110 md:scale-115 border-4 border-[var(--primary-color)]" : ""}`}
+            className={`player flex flex-col justify-center items-center m-2 rounded-lg w-[90%] max-w-[450px] md:w-[250px] h-[100px] bg-[#eeeded] ${isSelected
+                ? " scale-105 md:scale-115 border-4 border-[var(--primary-color)]" : ""}`}
             onClick={() => { setSelectedPlayer() }}>
             <div onDoubleClick={onEdit} className="bg-[var(--primary-color)] h-[50%] w-full flex justify-between items-center p-2 rounded-t-lg">
                 {!isEditMode ? (
