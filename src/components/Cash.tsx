@@ -58,7 +58,7 @@ const Cash = ({ selectedPlayer, players, setPlayers, }: CashProps) => {
     return (
         <div>
             <div className='flex justify-start items-center gap-4 w-[95%] md:w-4/5 mx-auto mt-7'>
-                <p>Cash</p>
+                <h2>Cash</h2>
                 <input className="w-30 text-center border-b-3 p-2 border-[var(--primary-color)] outline-none" type="number"
                     onChange={handleCashChange} // Update amount on change
                     value={amount === 0 ? "" : amount} // Display empty string if amount is 0

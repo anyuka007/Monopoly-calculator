@@ -192,7 +192,7 @@ function App() {
               players={players}
               setPlayers={setPlayers} />
           </div>
-          <div className='w-[95%] mx-auto md:w-4/5 flex flex-col md:flex-row  justify-between items-start md:gap-7'>
+          <div className='w-[95%] mx-auto md:w-4/5 flex flex-col md:flex-row  justify-between items-start md:gap-7 mt-3'>
             <div className='w-full md:w-1/2'>
               <RailroadsTable
                 mode={mode}
@@ -210,6 +210,14 @@ function App() {
           </div>
         </>
       )}
+      <footer className="w-full bg-[var(--primary-color)] text-white text-center py-6 mt-10">
+  <div className="flex flex-col items-center gap-1">
+    <p className="text-sm">© 2025 Monopoly Calculator</p>
+    <p className="text-sm flex items-center gap-1">
+      Built with ❤️ by <a href="https://github.com/anyuka007" className="underline hover:text-[var(--secondary-color)]">Anna Popova</a>
+    </p>
+  </div>
+</footer>
     </>
   )
 }
