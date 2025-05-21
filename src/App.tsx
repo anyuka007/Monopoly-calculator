@@ -97,8 +97,8 @@ function App() {
   };
 
   const modeButtonStyle = (buttonMode: 'classic' | 'wunderland') =>
-    `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 shadow-md text-white hover:scale-115 ${mode === buttonMode
-      ? "scale-110 border-2 border-[var(--secondary-color)] bg-[var(--primary-color)] hover:bg-[var(--primary-color)]"
+    `w-[120px] border p-2 rounded-lg text-center cursor-pointer transition-all duration-200 shadow-md text-white hover:scale-105 ${mode === buttonMode
+      ? "border-2 border-[var(--secondary-color)] bg-[var(--primary-color)] hover:bg-[var(--primary-color)]"
       : "opacity-50 bg-[var(--secondary-color)] hover:bg-[var(--secondary-color)] hover:opacity-100"
     }`;
 
