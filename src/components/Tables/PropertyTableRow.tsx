@@ -270,7 +270,7 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
     return (
         <tr>
             {/* Property Name and Price */}
-            <td className={`w-2/7 md:w-2/10 ${cellStyle} text-left text-xs md:text-lg ${colors[card.color] || "bg-gray-500"}`}>
+            <td className={`w-2/7 md:w-2/10 ${cellStyle} text-left text-xs md:text-lg ${colors[card.color] || "bg-gray-500"} min-w-[110px]`}>
                 <div >{card.name[mode]}</div>
                 <div className="md:hidden flex gap-2 justify-between items-center">
                     
