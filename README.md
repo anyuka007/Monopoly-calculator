@@ -11,6 +11,8 @@
 The Monopoly Calculator is a React-based application designed to track player scores, properties, railroads, utilities, and cash in an intuitive and interactive interface.
 
 ---
+![Responsive Design Showcase](https://github.com/user-attachments/assets/2c52092e-1532-44bd-86cb-447adc073ae3)
+
 
 ### **Features**
 - **Player Management**:
