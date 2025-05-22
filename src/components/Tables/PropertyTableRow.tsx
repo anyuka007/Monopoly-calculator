@@ -311,6 +311,13 @@ const PropertyTableRow = ({ mode, card, selectedPlayer, players, setPlayers }: P
                         value={numberOfHouses}
                         onChange={(e) => handleHousesCheck(e as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>)}
                         className={`w-8 h-8 cursor-pointer flex items-center justify-center border rounded-md text-center  appearance-none focus:outline-none  ${numberOfHouses > 0 ? "bg-[var(--primary-color)]" : ""}`}
+                        style={{
+                            appearance: 'none',
+                            WebkitAppearance: 'none',
+                            MozAppearance: 'none',
+                            textAlignLast: 'center',
+                            textAlign: 'center',
+                          }}
                     >
                         {[0, 1, 2, 3, 4].map((val) => (
                             <option className="bg-[var(--primary-color)]" key={val} value={val}>
