@@ -127,7 +127,8 @@ function App() {
               deleteHandler={() => deletePlayer(player.id)}
               editHandler={(newName) => editPlayer(player.id, newName)}
               setSelectedPlayer={() => selectPlayer(player.id)}
-              isSelected={selectedPlayer === player.id} />
+              isSelected={selectedPlayer === player.id} 
+              numberOfPlayers= {players.length}/>
           ))}
 
         <div className='flex justify-center items-center'>

@@ -1,7 +1,7 @@
 import { Pencil, Trash2, X, Check } from "lucide-react";
 import { useState } from "react";
 
-const iconStyle = "text-white";
+const iconStyle = "text-white hover:scale-110 transition-all duration-200";
 const iconSize = 20;
 
 export type PlayerProps = {
@@ -11,9 +11,10 @@ export type PlayerProps = {
     editHandler: (newName: string) => void;
     setSelectedPlayer: () => void;
     isSelected: boolean;
+    numberOfPlayers: number;
 }
 
-const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer, isSelected }: PlayerProps) => {
+const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer, isSelected, numberOfPlayers }: PlayerProps) => {
 
     const [isEditMode, setIsEditMode] = useState(false);
     const [newName, setNewName] = useState(name);
@@ -54,8 +55,8 @@ const Player = ({ name, score, deleteHandler, editHandler, setSelectedPlayer, is
                         <button onClick={onEdit}>
                             <Pencil size={iconSize} className={iconStyle} />
                         </button>
-                        <button onClick={deleteHandler}>
-                            <Trash2 size={iconSize} className={iconStyle} />
+                        <button onClick={deleteHandler} disabled={numberOfPlayers <= 2}>
+                            <Trash2 size={iconSize} className={`${numberOfPlayers <= 2 ? "text-gray-500" : iconStyle}`} />
                         </button>
                     </div>
                 ) : (
