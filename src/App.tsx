@@ -117,6 +117,11 @@ function App() {
           Monopoly Calculator
         </h1>
       </div>
+      <div className="flex flex-col justify-center items-center my-5">
+        <h2 className="hidden md:block text-xl font-bold text-[var(--tertiary-color)]">Select Your Assets, Add Cash - I Do The Math</h2>
+        <h2 className="md:hidden text-xl font-bold text-[var(--tertiary-color)]">Select Your Assets, Add Cash </h2>
+        <h2 className="md:hidden text-xl font-bold text-[var(--tertiary-color)]">I Do The Math</h2>
+      </div>
       <div className='flex flex-col  md:flex-row  w-[95%] md:w-4/5 m-auto justify-between md:justify-center items-center gap-5'>
         
           {players.map((player) => (
@@ -139,7 +144,7 @@ function App() {
 
       {selectedPlayer && (
         <>
-          <div className="w-[95%] md:w-4/5 mx-auto my-7 text-center py-4 ">
+          <div className="w-[95%] md:w-4/5 mx-auto my-7 text-center py-3 ">
             <div className="flex flex-col md:flex-row items-center justify-center mb-4">
               {/* <h2 className="text-sm font-semibold">Selected Player:</h2> */}
               <p className="text-xl font-bold ml-2">{currentPlayer.name}</p>
