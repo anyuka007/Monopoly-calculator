@@ -8,6 +8,7 @@ The Monopoly Calculator is a React-based application designed to track player sc
 🚀 Try it now https://monopoly-calculator.onrender.com – Use the Monopoly Calculator in your browser. 
 
 ---
+![Responsive Design Showcase (1)](https://github.com/user-attachments/assets/4dd416b3-4cd0-4a1d-b7be-c0590f13a801)
 ![Responsive Design Showcase](https://github.com/user-attachments/assets/2c52092e-1532-44bd-86cb-447adc073ae3)
 
 
